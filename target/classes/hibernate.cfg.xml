@@ -15,6 +15,7 @@
         <property name="format_sql">true</property> <!-- Show SQL formatted -->
 
         <mapping class="com.models.User" />
+        <mapping class="com.models.Student" />
 
     </session-factory>
 </hibernate-configuration>
