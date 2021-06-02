@@ -1,6 +1,5 @@
 package com.dao;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.models.Student;
@@ -9,7 +8,7 @@ import com.utils.DBFactory;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
-public class StudentResponsitory {
+public class StudentReponsitory {
     public void createStudent(Student student) {
         DBFactory.create(student);
     }

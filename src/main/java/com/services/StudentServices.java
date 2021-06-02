@@ -2,11 +2,11 @@ package com.services;
 
 import java.util.List;
 
-import com.dao.StudentResponsitory;
+import com.dao.StudentReponsitory;
 import com.models.Student;
 
 public class StudentServices {
-    StudentResponsitory repo = new StudentResponsitory();
+    StudentReponsitory repo = new StudentReponsitory();
 
     public StudentServices() {
 
