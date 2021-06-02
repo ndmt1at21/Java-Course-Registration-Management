@@ -3,11 +3,34 @@ package com.utils;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.constants.CommandRunInTransation;
+
 public class DBFactory {
     public static <T> void create(T data) {
         runTransaction((Session session) -> {
             session.save(data);
             return null;
+        });
+    }
+
+    public static <T> List<T> paginate(int page, int limit, Class<T> modelClass) {
+        return runTransaction((session) -> {
+            int firstIndexRow = (page - 1) * limit;
+
+            if (page < 0 || limit < 0 || firstIndexRow > countAll(modelClass)) {
+                return new ArrayList<T>();
+            }
+
+            String queryStr = "select * from " + modelClass.getName();
+
+            Query<T> query = session.createQuery(queryStr, modelClass);
+            query.setFirstResult(firstIndexRow);
+            query.setMaxResults(limit);
+
+            return query.list();
         });
     }
 
@@ -47,8 +70,8 @@ public class DBFactory {
         });
     }
 
-    public static <T> Long countAll(String modelClassName) {
-        String queryStr = "select count(*) from " + modelClassName;
+    public static <T> Long countAll(Class<T> modelClass) {
+        String queryStr = "select count(*) from " + modelClass.getName();
 
         return runTransaction((Session session) -> {
             Query<Long> query = session.createQuery(queryStr, Long.class);
@@ -74,9 +97,4 @@ public class DBFactory {
 
         return result;
     }
-}
-
-@FunctionalInterface
-interface CommandRunInTransation<T> {
-    public T runWith(Session session);
 }
