@@ -1,5 +1,5 @@
 package com.dao;
 
-public class SemesterResponsitory {
+public class SemesterReponsitory {
 
 }

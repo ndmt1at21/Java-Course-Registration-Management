@@ -33,8 +33,7 @@ public class Subject {
     public Subject() {
     }
 
-    public Subject(String id, String subjectID, String subjectName, int credits) {
-        this.id = id;
+    public Subject(String subjectID, String subjectName, int credits) {
         this.subjectID = subjectID;
         this.subjectName = subjectName;
         this.credits = credits;
@@ -42,10 +41,6 @@ public class Subject {
 
     public String getId() {
         return this.id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getSubjectID() {
@@ -71,5 +66,4 @@ public class Subject {
     public void setCredits(int credits) {
         this.credits = credits;
     }
-
 }

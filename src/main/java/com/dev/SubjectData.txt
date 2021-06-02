@@ -1,0 +1,59 @@
+BAA00011
+Anh văn 1
+0
+
+MTH00086
+Thực hành toán rời rạc
+1
+
+MTH00081
+Thực hành vi tích phân 1B
+1
+
+PHY00002
+Vật l‎‎ý đại cương 2 (Điện từ - Quang)
+3
+
+CSC10004
+Cấu trúc dữ liệu và giải thuật
+4
+
+MTH00040
+Xác suất thống kê
+3
+
+CSC13009
+Phát triển phần mềm cho thiết bị di động
+4
+
+MTH00052
+Phương pháp tính
+4
+
+CSC13002
+Nhập môn công nghệ phần mềm
+4
+
+CSC10005
+Kiến trúc máy tính và hợp ngữ
+4
+
+PHY00001
+Vật l‎‎ý đại cương 1 (Cơ - Nhiệt)
+4
+
+BAA00002
+Đường lối cách mạng của Đảng Cộng sản Việt Nam
+5
+
+ENV00001
+Môi trường đại cương
+2
+
+CSC10003
+Phương pháp lập trình hướng đối tượng
+4
+
+CSC13008
+Phát triển ứng dụng web
+4
