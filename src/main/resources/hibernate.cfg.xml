@@ -14,8 +14,17 @@
         <property name="show_sql">true</property> <!-- Show SQL in console -->
         <property name="format_sql">true</property> <!-- Show SQL formatted -->
 
+        <!-- Models -->
         <mapping class="com.models.User" />
         <mapping class="com.models.Student" />
+        <mapping class="com.models.AcademicManager" />
+        <mapping class="com.models.Class" />
+        <mapping class="com.models.Subject" />
+        <mapping class="com.models.Course" />
+        <mapping class="com.models.Semester" />
+        <mapping class="com.models.CurrentSemester" />
+        <mapping class="com.models.SemesterRegisterSession" />
+        <mapping class="com.models.ShiftTime" />
 
     </session-factory>
 </hibernate-configuration>

@@ -4,6 +4,7 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 
 import jakarta.validation.constraints.NotNull;
@@ -13,17 +14,30 @@ import com.services.StudentServices;
 
 @Entity
 public class Student extends User {
+
     @Column(unique = true, updatable = false)
     @NotNull
     private String studentID;
 
-    public Student() {
+    @NotNull
+    @OneToOne
+    private Class studentClass;
 
+    public Student() {
     }
 
     public Student(String username, String password, String firstName, String lastName, String address, Date birth,
-            Sex sex, int startYear) {
+            Sex sex, int startYear, Class studentClass) {
         super(username, password, firstName, lastName, address, birth, sex, startYear);
+        this.studentClass = studentClass;
+    }
+
+    public Class getStudentClass() {
+        return this.studentClass;
+    }
+
+    public void setStudentClass(Class studentClass) {
+        this.studentClass = studentClass;
     }
 
     @PrePersist
