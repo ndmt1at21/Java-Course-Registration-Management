@@ -3,6 +3,7 @@ package com.utils;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -77,6 +78,13 @@ public class DBFactory {
             Query<Long> query = session.createQuery(queryStr, Long.class);
             Long count = query.uniqueResult();
             return count;
+        });
+    }
+
+    public static <T, U extends Serializable> T get(Class<T> modelClass, U id) {
+        return runTransaction((Session session) -> {
+            T obj = session.get(modelClass, id);
+            return obj;
         });
     }
 

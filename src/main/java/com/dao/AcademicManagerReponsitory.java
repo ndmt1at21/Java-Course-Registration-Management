@@ -3,21 +3,20 @@ package com.dao;
 import java.util.List;
 
 import com.models.AcademicManager;
-import com.models.Course;
 import com.utils.DBFactory;
 
 public class AcademicManagerReponsitory {
 
-    public void createAcademicManager(Course course) {
-        DBFactory.create(course);
+    public void createAcademicManager(AcademicManager obj) {
+        DBFactory.create(obj);
     }
 
-    public void updateAcademicManager(Course course) {
-        DBFactory.update(course);
+    public void updateAcademicManager(AcademicManager obj) {
+        DBFactory.update(obj);
     }
 
-    public void deleteAcademicManager(Course course) {
-        DBFactory.delete(course);
+    public void deleteAcademicManager(AcademicManager obj) {
+        DBFactory.delete(obj);
     }
 
     public List<AcademicManager> getAcademicManagers(int pageNumber, int limit) {
