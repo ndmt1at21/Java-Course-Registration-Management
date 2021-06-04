@@ -69,12 +69,6 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Sex sex;
 
-    @Column
-    @NotNull
-    @Min(1900)
-    @Max(3000)
-    private int startYear;
-
     @PrePersist
     @PreUpdate
     private void transformData() {
@@ -105,15 +99,6 @@ public class User {
         this.address = address;
         this.birth = birth;
         this.sex = sex;
-        this.startYear = startYear;
-    }
-
-    public int getStartYear() {
-        return this.startYear;
-    }
-
-    public void setStartYear(int startYear) {
-        this.startYear = startYear;
     }
 
     public String getId() {

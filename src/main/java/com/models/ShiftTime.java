@@ -25,4 +25,33 @@ public class ShiftTime {
     @Column
     @NotNull(message = "End shift time cannot empty")
     private Date endTime;
+
+    public ShiftTime() {
+    }
+
+    public ShiftTime(int id, Date startTime, Date endTime) {
+        this.id = id;
+        this.startTime = startTime;
+        this.endTime = endTime;
+    }
+
+    public int getId() {
+        return this.id;
+    }
+
+    public Date getStartTime() {
+        return this.startTime;
+    }
+
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
+    }
+
+    public Date getEndTime() {
+        return this.endTime;
+    }
+
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
+    }
 }

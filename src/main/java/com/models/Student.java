@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 
 import com.constants.Sex;
@@ -23,13 +25,32 @@ public class Student extends User {
     @OneToOne
     private Class studentClass;
 
+    @Column
+    @NotNull
+    @Min(1900)
+    @Max(3000)
+    private int startYear;
+
     public Student() {
     }
 
     public Student(String username, String password, String firstName, String lastName, String address, Date birth,
             Sex sex, int startYear, Class studentClass) {
-        super(username, password, firstName, lastName, address, birth, sex, startYear);
+        super(username, password, firstName, lastName, address, birth, sex);
         this.studentClass = studentClass;
+        this.startYear = startYear;
+    }
+
+    public String getStudentID() {
+        return this.studentID;
+    }
+
+    public int getStartYear() {
+        return this.startYear;
+    }
+
+    public void setStartYear(int startYear) {
+        this.startYear = startYear;
     }
 
     public Class getStudentClass() {

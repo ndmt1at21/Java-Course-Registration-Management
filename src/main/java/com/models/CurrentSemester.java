@@ -1,24 +1,31 @@
 package com.models;
 
-import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.OneToOne;
 
 import jakarta.validation.constraints.NotNull;
 
 @Entity
-public class CurrentSemester extends Semester {
-
-    public CurrentSemester() {
-        super();
-    }
-
-    public CurrentSemester(int name, Date startDate, Date endDate) {
-        super(name, startDate, endDate);
-    }
+public class CurrentSemester {
 
     @Column
-    @NotNull(message = "State of current semester is not null")
-    private boolean isActive;
+    @OneToOne
+    @NotNull(message = "Semester cannot be null")
+    private Semester semester;
+
+    public CurrentSemester() {
+    }
+
+    public CurrentSemester(Semester semester) {
+        this.semester = semester;
+    }
+
+    public Semester getSemester() {
+        return this.semester;
+    }
+
+    public void setSemester(Semester semester) {
+        this.semester = semester;
+    }
 }
