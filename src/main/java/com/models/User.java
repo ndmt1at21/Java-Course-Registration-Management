@@ -16,11 +16,10 @@ import javax.persistence.Table;
 
 import com.constants.Sex;
 
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
@@ -69,6 +68,10 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Sex sex;
 
+    @Column
+    @CreationTimestamp
+    private Date createdAt;
+
     @PrePersist
     @PreUpdate
     private void transformData() {
@@ -91,7 +94,7 @@ public class User {
     }
 
     public User(String username, String password, String firstName, String lastName, String address, Date birth,
-            Sex sex, int startYear) {
+            Sex sex) {
         this.username = username;
         this.password = password;
         this.firstName = firstName;
@@ -159,6 +162,10 @@ public class User {
 
     public void setSex(Sex sex) {
         this.sex = sex;
+    }
+
+    public Date getCreatedAt() {
+        return this.getCreatedAt();
     }
 
     public boolean checkPassword(String password) {

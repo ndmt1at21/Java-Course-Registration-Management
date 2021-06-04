@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 
 import jakarta.validation.constraints.Max;
@@ -32,6 +33,10 @@ public class Semester {
     @Column
     @NotNull(message = "End date of semester is not specified")
     private Date endDate;
+
+    @Column
+    @CreationTimestamp
+    private Date createdAt;
 
     public Semester() {
     }
@@ -64,5 +69,9 @@ public class Semester {
 
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
+    }
+
+    public Date getCreatedAt() {
+        return this.createdAt;
     }
 }

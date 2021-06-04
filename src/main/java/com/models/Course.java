@@ -1,20 +1,16 @@
 package com.models;
 
 import java.time.DayOfWeek;
-import java.util.Calendar;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
 
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
@@ -48,6 +44,10 @@ public class Course {
 
     @OneToOne
     private Subject subject;
+
+    @Column
+    @CreationTimestamp
+    private Date createdAt;
 
     public Course() {
     }
@@ -89,5 +89,9 @@ public class Course {
 
     public void setShiftTime(ShiftTime shiftTime) {
         this.shiftTime = shiftTime;
+    }
+
+    public Date getCreatedAt() {
+        return this.createdAt;
     }
 }
