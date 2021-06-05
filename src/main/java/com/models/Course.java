@@ -127,6 +127,6 @@ public class Course {
         return "{" + " courseID='" + getCourseID() + "'" + ", teacherName='" + getTeacherName() + "'"
                 + ", departmentName='" + getDepartmentName() + "'" + ", dayOfWeek='" + getDayOfWeek() + "'"
                 + ", shiftTime='" + getShiftTime() + "'" + ", numberOfSlot='" + getNumberOfSlot() + "'" + ", subject='"
-                + getSubject() + "'" + ", createdAt='" + getCreatedAt() + "'" + "}";
+                + getSubject() + "'" + "}";
     }
 }

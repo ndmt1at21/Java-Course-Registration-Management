@@ -25,6 +25,9 @@ public class ClassServices {
     }
 
     public List<Class> getClass(int pageNumber, int limit) {
-        return repo.getClass(pageNumber, limit);
+        List<Class> list = repo.getClass(pageNumber, limit);
+
+        System.out.println(list.size());
+        return list;
     }
 }

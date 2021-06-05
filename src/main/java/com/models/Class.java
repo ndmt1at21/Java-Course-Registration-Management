@@ -2,6 +2,7 @@ package com.models;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -58,11 +59,21 @@ public class Class {
 
     public Class() {
         this.students = new ArrayList<Student>();
+        this.numberOfStudent = 0;
+        this.numberOfStudentBySex = new HashMap<Sex, Integer>();
+
+        for (Sex sex : Sex.values())
+            this.numberOfStudentBySex.put(sex, 0);
     }
 
     public Class(String className) {
         this.className = className;
         this.students = new ArrayList<Student>();
+        this.numberOfStudent = 0;
+        this.numberOfStudentBySex = new HashMap<Sex, Integer>();
+
+        for (Sex sex : Sex.values())
+            this.numberOfStudentBySex.put(sex, 0);
     }
 
     public Class(String classID, String className, List<Student> students) {
@@ -114,7 +125,6 @@ public class Class {
     public String toString() {
         return "{" + " classID='" + getClassID() + "'" + ", className='" + getClassName() + "'" + ", students='"
                 + getStudents() + "'" + ", numberOfStudent='" + getNumberOfStudent() + "'" + ", numberOfStudentBySex='"
-                + getNumberOfStudentBySex() + "'" + ", createdAt='" + getCreatedAt() + "'" + "}";
+                + getNumberOfStudentBySex() + "'" + "}";
     }
-
 }

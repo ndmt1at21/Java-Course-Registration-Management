@@ -79,7 +79,7 @@ public class Student extends User {
 
     @Override
     public String toString() {
-        return "{" + " studentID='" + getStudentID() + "'" + ", studentClass='" + getStudentClass() + "'"
-                + ", startYear='" + getStartYear() + "'" + "}";
+        return "{" + super.toString() + " studentID='" + getStudentID() + "'" + ", studentClass='"
+                + getStudentClass().getClassName() + "'" + ", startYear='" + getStartYear() + "'" + "}";
     }
 }

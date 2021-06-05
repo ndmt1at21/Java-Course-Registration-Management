@@ -27,6 +27,7 @@ public class DBFactory {
 
             String queryStr = "from " + modelClass.getSimpleName();
 
+            System.out.println(queryStr);
             Query<T> query = session.createQuery(queryStr, modelClass);
             query.setFirstResult(firstIndexRow);
             query.setMaxResults(limit);

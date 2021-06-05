@@ -86,7 +86,6 @@ public class Semester {
     @Override
     public String toString() {
         return "{" + " semesterID='" + getSemesterID() + "'" + ", semNo='" + getName() + "'" + ", startDate='"
-                + getStartDate() + "'" + ", endDate='" + getEndDate() + "'" + ", createdAt='" + getCreatedAt() + "'"
-                + "}";
+                + getStartDate() + "'" + ", endDate='" + getEndDate() + "'" + "}";
     }
 }

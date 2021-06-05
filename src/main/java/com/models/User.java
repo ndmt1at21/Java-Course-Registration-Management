@@ -68,7 +68,7 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Sex sex;
 
-    @Column
+    @Column(updatable = false)
     @CreationTimestamp
     private Date createdAt;
 
@@ -116,10 +116,6 @@ public class User {
         this.username = username;
     }
 
-    protected String getPassword() {
-        return this.password;
-    }
-
     public void setPassword(String password) {
         this.password = password;
     }
@@ -165,7 +161,7 @@ public class User {
     }
 
     public Date getCreatedAt() {
-        return this.getCreatedAt();
+        return this.createdAt;
     }
 
     public boolean checkPassword(String password) {
@@ -175,9 +171,8 @@ public class User {
 
     @Override
     public String toString() {
-        return "{" + " id='" + getId() + "'" + ", username='" + getUsername() + "'" + ", password='" + getPassword()
-                + "'" + ", firstName='" + getFirstName() + "'" + ", lastName='" + getLastName() + "'" + ", address='"
-                + getAddress() + "'" + ", birth='" + getBirth() + "'" + ", sex='" + getSex() + "'" + ", createdAt='"
-                + getCreatedAt() + "'" + "}";
+        return "{" + " id='" + getId() + "'" + ", username='" + getUsername() + "'" + ", firstName='" + getFirstName()
+                + "'" + ", lastName='" + getLastName() + "'" + ", address='" + getAddress() + "'" + ", birth='"
+                + getBirth() + "'" + ", sex='" + getSex() + "'" + "}";
     }
 }
