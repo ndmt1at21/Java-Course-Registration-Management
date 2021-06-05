@@ -4,6 +4,7 @@ import java.time.DayOfWeek;
 import java.util.Date;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
@@ -14,7 +15,9 @@ import org.hibernate.annotations.GenericGenerator;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
+@Entity
 public class Course {
+
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid")
@@ -34,7 +37,6 @@ public class Course {
     private DayOfWeek dayOfWeek;
 
     @OneToOne
-    @Column
     @NotNull
     private ShiftTime shiftTime;
 
@@ -52,11 +54,16 @@ public class Course {
     public Course() {
     }
 
-    public Course(String teacherName, String departmentName, DayOfWeek dayOfWeek, ShiftTime shiftTime) {
+    public Course(String courseID, String teacherName, String departmentName, DayOfWeek dayOfWeek, ShiftTime shiftTime,
+            int numberOfSlot, Subject subject, Date createdAt) {
+        this.courseID = courseID;
         this.teacherName = teacherName;
         this.departmentName = departmentName;
         this.dayOfWeek = dayOfWeek;
         this.shiftTime = shiftTime;
+        this.numberOfSlot = numberOfSlot;
+        this.subject = subject;
+        this.createdAt = createdAt;
     }
 
     public String getTeacherName() {
@@ -93,5 +100,33 @@ public class Course {
 
     public Date getCreatedAt() {
         return this.createdAt;
+    }
+
+    public String getCourseID() {
+        return this.courseID;
+    }
+
+    public int getNumberOfSlot() {
+        return this.numberOfSlot;
+    }
+
+    public void setNumberOfSlot(int numberOfSlot) {
+        this.numberOfSlot = numberOfSlot;
+    }
+
+    public Subject getSubject() {
+        return this.subject;
+    }
+
+    public void setSubject(Subject subject) {
+        this.subject = subject;
+    }
+
+    @Override
+    public String toString() {
+        return "{" + " courseID='" + getCourseID() + "'" + ", teacherName='" + getTeacherName() + "'"
+                + ", departmentName='" + getDepartmentName() + "'" + ", dayOfWeek='" + getDayOfWeek() + "'"
+                + ", shiftTime='" + getShiftTime() + "'" + ", numberOfSlot='" + getNumberOfSlot() + "'" + ", subject='"
+                + getSubject() + "'" + ", createdAt='" + getCreatedAt() + "'" + "}";
     }
 }

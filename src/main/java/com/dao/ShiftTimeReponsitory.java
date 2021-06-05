@@ -1,5 +1,7 @@
 package com.dao;
 
+import java.util.List;
+
 import com.models.ShiftTime;
 import com.utils.DBFactory;
 
@@ -14,5 +16,9 @@ public class ShiftTimeReponsitory {
 
     public void deleteShiftTime(ShiftTime shiftTime) {
         DBFactory.delete(shiftTime);
+    }
+
+    public List<ShiftTime> getShiftTimes(int pageNumber, int limit) {
+        return DBFactory.paginate(pageNumber, limit, ShiftTime.class);
     }
 }

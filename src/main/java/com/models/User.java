@@ -172,4 +172,12 @@ public class User {
         String enryptPass = BCrypt.withDefaults().hashToString(12, password.toCharArray());
         return enryptPass == this.password;
     }
+
+    @Override
+    public String toString() {
+        return "{" + " id='" + getId() + "'" + ", username='" + getUsername() + "'" + ", password='" + getPassword()
+                + "'" + ", firstName='" + getFirstName() + "'" + ", lastName='" + getLastName() + "'" + ", address='"
+                + getAddress() + "'" + ", birth='" + getBirth() + "'" + ", sex='" + getSex() + "'" + ", createdAt='"
+                + getCreatedAt() + "'" + "}";
+    }
 }

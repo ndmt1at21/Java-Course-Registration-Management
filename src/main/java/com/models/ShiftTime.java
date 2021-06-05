@@ -13,10 +13,11 @@ import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class ShiftTime {
+
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid")
-    private int id;
+    private String id;
 
     @Column
     @NotNull(message = "Start shift time cannot empty")
@@ -29,13 +30,12 @@ public class ShiftTime {
     public ShiftTime() {
     }
 
-    public ShiftTime(int id, Date startTime, Date endTime) {
-        this.id = id;
+    public ShiftTime(Date startTime, Date endTime) {
         this.startTime = startTime;
         this.endTime = endTime;
     }
 
-    public int getId() {
+    public String getId() {
         return this.id;
     }
 
@@ -53,5 +53,11 @@ public class ShiftTime {
 
     public void setEndTime(Date endTime) {
         this.endTime = endTime;
+    }
+
+    @Override
+    public String toString() {
+        return "{" + " id='" + getId() + "'" + ", startTime='" + getStartTime() + "'" + ", endTime='" + getEndTime()
+                + "'" + "}";
     }
 }

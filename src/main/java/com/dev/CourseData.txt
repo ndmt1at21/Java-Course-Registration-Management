@@ -1,5 +1,27 @@
 Nguyên Hồng Hoa
 E304
-2
-2
 100
+
+Nguyễn Thị Hồng
+E202
+99
+
+Trần Văn Hải
+D302
+110
+
+Phạm Chánh Trung
+A202
+100
+
+Lê Anh Minh
+D201
+120
+
+Nguyễn Triều Thái
+F101
+100
+
+Nguyễn Đại Phạm
+A203
+80

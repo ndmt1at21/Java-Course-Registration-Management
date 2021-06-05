@@ -5,3 +5,35 @@ Nguyễn Anh Ba
 Nguyễn Văn Cừ, Q.5, TPHCM
 23/07/1980
 0
+
+minhtringuyenhcmus
+123456789
+Trí
+Nguyễn Minh
+232, Cầu Đen, Q.2, TPHCM
+11/02/1975
+0
+
+giangnguyenthihcmus
+123456789
+Giang
+Nguyễn Thị
+232, Linh Trung, Thủ Đức, TPHCM
+30/10/1975
+1
+
+minhnguyenminhhcmus
+123456789
+Minh
+Nguyễn Minh
+100, Linh Trung, Thủ Đức, TPHCM
+25/07/1978
+1
+
+vanhochanhhcmus
+123456789
+Chánh
+Hồ Văn Chánh
+100, Linh Trung, Thủ Đức, TPHCM
+25/07/1978
+1

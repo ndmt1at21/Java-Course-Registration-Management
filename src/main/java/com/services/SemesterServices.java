@@ -27,4 +27,14 @@ public class SemesterServices {
     public List<Semester> getSemesters(int pageNumber, int limit) {
         return repo.getSemesters(pageNumber, limit);
     }
+
+    public Semester getCurrentSemester() {
+        CurrentSemesterServices services = new CurrentSemesterServices();
+        return services.getCurrentSemester();
+    }
+
+    public void setCurrentSemester(Semester semester) {
+        CurrentSemesterServices services = new CurrentSemesterServices();
+        services.setCurrentSemester(semester);
+    }
 }

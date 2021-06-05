@@ -25,7 +25,7 @@ public class DBFactory {
                 return new ArrayList<T>();
             }
 
-            String queryStr = "select * from " + modelClass.getName();
+            String queryStr = "from " + modelClass.getSimpleName();
 
             Query<T> query = session.createQuery(queryStr, modelClass);
             query.setFirstResult(firstIndexRow);

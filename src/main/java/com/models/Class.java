@@ -1,12 +1,14 @@
 package com.models;
 
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.Dictionary;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -22,7 +24,6 @@ import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class Class {
-
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid")
@@ -32,7 +33,7 @@ public class Class {
     @NotNull(message = "Class name cannot null")
     private String className;
 
-    @OneToMany()
+    @OneToMany(mappedBy = "studentClass", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Student> students;
 
     @Transient
@@ -53,6 +54,20 @@ public class Class {
             Integer currNum = this.numberOfStudentBySex.get(student.getSex());
             this.numberOfStudentBySex.put(student.getSex(), currNum++);
         });
+    }
+
+    public Class() {
+        this.students = new ArrayList<Student>();
+    }
+
+    public Class(String className) {
+        this.className = className;
+        this.students = new ArrayList<Student>();
+    }
+
+    public Class(String classID, String className, List<Student> students) {
+        this.className = className;
+        this.students = students;
     }
 
     public String getClassID() {
@@ -94,4 +109,12 @@ public class Class {
     public Date getCreatedAt() {
         return this.createdAt;
     }
+
+    @Override
+    public String toString() {
+        return "{" + " classID='" + getClassID() + "'" + ", className='" + getClassName() + "'" + ", students='"
+                + getStudents() + "'" + ", numberOfStudent='" + getNumberOfStudent() + "'" + ", numberOfStudentBySex='"
+                + getNumberOfStudentBySex() + "'" + ", createdAt='" + getCreatedAt() + "'" + "}";
+    }
+
 }

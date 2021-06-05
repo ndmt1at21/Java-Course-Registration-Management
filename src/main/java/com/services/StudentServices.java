@@ -9,7 +9,6 @@ public class StudentServices {
     StudentReponsitory repo = new StudentReponsitory();
 
     public StudentServices() {
-
     }
 
     public List<Student> getStudents(int pageNumber, int limit) {

@@ -1,6 +1,7 @@
 package com.models;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
@@ -10,7 +11,9 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 
+@Entity
 public class Subject {
+
     @Id
     @Column
     @GeneratedValue(generator = "uuid")
@@ -65,5 +68,11 @@ public class Subject {
 
     public void setCredits(int credits) {
         this.credits = credits;
+    }
+
+    @Override
+    public String toString() {
+        return "{" + " id='" + getId() + "'" + ", subjectID='" + getSubjectID() + "'" + ", subjectName='"
+                + getSubjectName() + "'" + ", credits='" + getCredits() + "'" + "}";
     }
 }

@@ -3,8 +3,11 @@ package com.models;
 import java.util.Date;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+
+import com.constants.SemesterNo;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
@@ -13,6 +16,7 @@ import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 
+@Entity
 public class Semester {
 
     @Id
@@ -23,8 +27,8 @@ public class Semester {
     @Column
     @NotNull(message = "Name of semester is not specified")
     @Min(value = 1, message = "Name of semester is at least 1")
-    @Max(value = 4, message = "Name of semester is less than 5")
-    private int name;
+    @Max(value = 3, message = "Name of semester is less than 4")
+    private SemesterNo semNo;
 
     @Column
     @NotNull(message = "Start date of semester is not specified")
@@ -41,18 +45,18 @@ public class Semester {
     public Semester() {
     }
 
-    public Semester(int name, Date startDate, Date endDate) {
-        this.name = name;
+    public Semester(SemesterNo semNo, Date startDate, Date endDate) {
+        this.semNo = semNo;
         this.startDate = startDate;
         this.endDate = endDate;
     }
 
-    public int getName() {
-        return this.name;
+    public SemesterNo getName() {
+        return this.semNo;
     }
 
-    public void setName(int name) {
-        this.name = name;
+    public void setName(SemesterNo semNo) {
+        this.semNo = semNo;
     }
 
     public Date getStartDate() {
@@ -73,5 +77,16 @@ public class Semester {
 
     public Date getCreatedAt() {
         return this.createdAt;
+    }
+
+    public String getSemesterID() {
+        return this.semesterID;
+    }
+
+    @Override
+    public String toString() {
+        return "{" + " semesterID='" + getSemesterID() + "'" + ", semNo='" + getName() + "'" + ", startDate='"
+                + getStartDate() + "'" + ", endDate='" + getEndDate() + "'" + ", createdAt='" + getCreatedAt() + "'"
+                + "}";
     }
 }

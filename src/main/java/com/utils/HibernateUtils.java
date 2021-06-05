@@ -19,6 +19,7 @@ public class HibernateUtils {
                 .configure("hibernate.cfg.xml") // Load hibernate.cfg.xml from resource folder by default
                 .build();
         Metadata metadata = new MetadataSources(serviceRegistry).getMetadataBuilder().build();
+        System.out.println("dhfjhdjfh");
         return metadata.getSessionFactoryBuilder().build();
     }
 

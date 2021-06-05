@@ -2,8 +2,12 @@ package com.models;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 
@@ -22,7 +26,8 @@ public class Student extends User {
     private String studentID;
 
     @NotNull
-    @OneToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "classID")
     private Class studentClass;
 
     @Column
@@ -70,5 +75,11 @@ public class Student extends User {
         Long countStudent = studentServices.countStudentByYear(this.getStartYear());
 
         this.studentID = prefix + String.format("%04d", countStudent);
+    }
+
+    @Override
+    public String toString() {
+        return "{" + " studentID='" + getStudentID() + "'" + ", studentClass='" + getStudentClass() + "'"
+                + ", startYear='" + getStartYear() + "'" + "}";
     }
 }

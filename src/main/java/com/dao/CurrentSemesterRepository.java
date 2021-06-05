@@ -7,9 +7,6 @@ import com.utils.DBFactory;
 
 public class CurrentSemesterRepository {
     public void createSemester(CurrentSemester currSemester) {
-        if (countAllCurrentSemester() < 2)
-            return;
-
         DBFactory.create(currSemester);
     }
 
@@ -25,7 +22,7 @@ public class CurrentSemesterRepository {
         return tmp.get(0);
     }
 
-    private Long countAllCurrentSemester() {
+    public Long countAllCurrentSemester() {
         return DBFactory.countAll(CurrentSemester.class);
     }
 }

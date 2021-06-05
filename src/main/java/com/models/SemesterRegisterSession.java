@@ -4,39 +4,52 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.OneToOne;
+
+import org.hibernate.annotations.GenericGenerator;
 
 import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class SemesterRegisterSession {
-    @Column
+
+    @Id
+    @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "uuid")
+    private String semesterRegisterSessionID;
+
     @OneToOne()
     private Semester semester;
 
     @Column
     @NotNull
-    private Date startDate;
+    private Date startTime;
 
     @Column
     @NotNull
-    private Date endDate;
+    private Date endTime;
 
     public SemesterRegisterSession() {
     }
 
-    public Date getEndDate() {
-        return this.endDate;
-    }
-
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
-    }
-
-    public SemesterRegisterSession(Semester semester, Date startDate, Date endDate) {
+    public SemesterRegisterSession(Semester semester, Date startTime, Date endTime) {
         this.semester = semester;
-        this.startDate = startDate;
-        this.endDate = endDate;
+        this.startTime = startTime;
+        this.endTime = endTime;
+    }
+
+    public String getSemesterRegisterSessionID() {
+        return this.semesterRegisterSessionID;
+    }
+
+    public Date getEndTime() {
+        return this.endTime;
+    }
+
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
     }
 
     public Semester getSemester() {
@@ -47,12 +60,18 @@ public class SemesterRegisterSession {
         this.semester = semester;
     }
 
-    public Date getStartDate() {
-        return this.startDate;
+    public Date getStartTime() {
+        return this.startTime;
     }
 
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
     }
 
+    @Override
+    public String toString() {
+        return "{" + " semesterRegisterSessionID='" + getSemesterRegisterSessionID() + "'" + ", semester='"
+                + getSemester() + "'" + ", startTime='" + getStartTime() + "'" + ", endTime='" + getEndTime() + "'"
+                + "}";
+    }
 }
