@@ -22,6 +22,17 @@ import jakarta.validation.constraints.NotNull;
 import com.constants.Sex;
 import com.services.StudentServices;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
+
+@Data
+@EqualsAndHashCode(callSuper = true)
+@NoArgsConstructor
+@AllArgsConstructor
+@SuperBuilder
 @Entity
 public class Student extends User {
 
@@ -52,59 +63,5 @@ public class Student extends User {
         Long countStudent = studentServices.countStudentByYear(this.getStartYear());
 
         this.studentID = prefix + String.format("%04d", countStudent);
-    }
-
-    public Student() {
-        this.registrations = new ArrayList<CourseRegistration>();
-    }
-
-    public Student(String username, String password, String firstName, String lastName, String address, Date birth,
-            Sex sex, int startYear, Class studentClass) {
-        super(username, password, firstName, lastName, address, birth, sex);
-        this.studentClass = studentClass;
-        this.startYear = startYear;
-        this.registrations = new ArrayList<CourseRegistration>();
-    }
-
-    public Student(String username, String password, String firstName, String lastName, String address, Date birth,
-            Sex sex, int startYear, Class studentClass, List<CourseRegistration> registrations) {
-        super(username, password, firstName, lastName, address, birth, sex);
-        this.studentClass = studentClass;
-        this.startYear = startYear;
-        this.registrations = registrations;
-    }
-
-    public String getStudentID() {
-        return this.studentID;
-    }
-
-    public int getStartYear() {
-        return this.startYear;
-    }
-
-    public void setStartYear(int startYear) {
-        this.startYear = startYear;
-    }
-
-    public Class getStudentClass() {
-        return this.studentClass;
-    }
-
-    public void setStudentClass(Class studentClass) {
-        this.studentClass = studentClass;
-    }
-
-    public List<CourseRegistration> getRegistrations() {
-        return this.registrations;
-    }
-
-    public void setRegistrations(List<CourseRegistration> registrations) {
-        this.registrations = registrations;
-    }
-
-    @Override
-    public String toString() {
-        return "{" + super.toString() + " studentID='" + getStudentID() + "'" + ", studentClass='"
-                + getStudentClass().getClassName() + "'" + ", startYear='" + getStartYear() + "'" + "}";
     }
 }

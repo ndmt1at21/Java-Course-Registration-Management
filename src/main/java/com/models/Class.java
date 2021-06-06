@@ -22,7 +22,13 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
 
+@Data
+@AllArgsConstructor
+@Builder
 @Entity
 public class Class {
     @Id
@@ -76,55 +82,8 @@ public class Class {
             this.numberOfStudentBySex.put(sex, 0);
     }
 
-    public Class(String classID, String className, List<Student> students) {
+    public Class(String className, List<Student> students) {
         this.className = className;
         this.students = students;
-    }
-
-    public String getClassID() {
-        return this.classID;
-    }
-
-    public String getClassName() {
-        return this.className;
-    }
-
-    public void setClassName(String className) {
-        this.className = className;
-    }
-
-    public List<Student> getStudents() {
-        return this.students;
-    }
-
-    public void setStudents(List<Student> students) {
-        this.students = students;
-    }
-
-    public int getNumberOfStudent() {
-        return this.numberOfStudent;
-    }
-
-    public void setNumberOfStudent(int numberOfStudent) {
-        this.numberOfStudent = numberOfStudent;
-    }
-
-    public Map<Sex, Integer> getNumberOfStudentBySex() {
-        return this.numberOfStudentBySex;
-    }
-
-    public void setNumberOfStudentBySex(Map<Sex, Integer> numberOfStudentBySex) {
-        this.numberOfStudentBySex = numberOfStudentBySex;
-    }
-
-    public Date getCreatedAt() {
-        return this.createdAt;
-    }
-
-    @Override
-    public String toString() {
-        return "{" + " classID='" + getClassID() + "'" + ", className='" + getClassName() + "'" + ", students='"
-                + getStudents() + "'" + ", numberOfStudent='" + getNumberOfStudent() + "'" + ", numberOfStudentBySex='"
-                + getNumberOfStudentBySex() + "'" + "}";
     }
 }

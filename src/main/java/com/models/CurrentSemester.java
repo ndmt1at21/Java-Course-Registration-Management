@@ -6,7 +6,15 @@ import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 public class CurrentSemester {
 
@@ -18,13 +26,6 @@ public class CurrentSemester {
     @MapsId
     private Semester semester;
 
-    public CurrentSemester() {
-    }
-
-    public CurrentSemester(Semester semester) {
-        this.semester = semester;
-    }
-
     public String getCurrentSemesterID() {
         return this.currentSemesterID;
     }
@@ -35,11 +36,5 @@ public class CurrentSemester {
 
     public void setSemester(Semester semester) {
         this.semester = semester;
-    }
-
-    @Override
-    public String toString() {
-        return "{" + " currentSemesterID='" + getCurrentSemesterID() + "'" + ", semester='" + getSemester().toString()
-                + "'" + "}";
     }
 }

@@ -8,16 +8,16 @@ public class CurrentSemesterServices {
 
     private CurrentSemesterRepository repo = new CurrentSemesterRepository();
 
-    public CurrentSemesterServices() {
-    }
+    public CurrentSemesterServices() {}
 
     public void setCurrentSemester(Semester semester) {
+        CurrentSemester currentSemester = CurrentSemester.builder().semester(semester).build();
         if (repo.countAllCurrentSemester() == 0) {
-            repo.createSemester(new CurrentSemester(semester));
+            repo.createSemester(currentSemester);
             return;
         }
 
-        repo.updateSemester(new CurrentSemester(semester));
+        repo.updateSemester(currentSemester);
     }
 
     public Semester getCurrentSemester() {

@@ -1,5 +1,5 @@
 {
-    "editor.useTabStops": true,
-    "editor.tabSize": 4,
-    "java.configuration.updateBuildConfiguration": "automatic"
+  "editor.useTabStops": true,
+  "editor.tabSize": 4,
+  "java.configuration.updateBuildConfiguration": "automatic"
 }

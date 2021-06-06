@@ -23,6 +23,16 @@ import at.favre.lib.crypto.bcrypt.BCrypt;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@SuperBuilder
 @Entity
 @Table(name = "`User`")
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
@@ -90,89 +100,8 @@ public class User {
         this.password = BCrypt.withDefaults().hashToString(12, this.password.toCharArray());
     }
 
-    public User() {
-    }
-
-    public User(String username, String password, String firstName, String lastName, String address, Date birth,
-            Sex sex) {
-        this.username = username;
-        this.password = password;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.address = address;
-        this.birth = birth;
-        this.sex = sex;
-    }
-
-    public String getUserId() {
-        return this.userID;
-    }
-
-    public String getUsername() {
-        return this.username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getFirstName() {
-        return this.firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return this.lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getAddress() {
-        return this.address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public Date getBirth() {
-        return this.birth;
-    }
-
-    public void setBirth(Date birth) {
-        this.birth = birth;
-    }
-
-    public Sex getSex() {
-        return this.sex;
-    }
-
-    public void setSex(Sex sex) {
-        this.sex = sex;
-    }
-
-    public Date getCreatedAt() {
-        return this.createdAt;
-    }
-
     public boolean checkPassword(String password) {
         String enryptPass = BCrypt.withDefaults().hashToString(12, password.toCharArray());
         return enryptPass == this.password;
-    }
-
-    @Override
-    public String toString() {
-        return "{" + " id='" + getUserId() + "'" + ", username='" + getUsername() + "'" + ", firstName='"
-                + getFirstName() + "'" + ", lastName='" + getLastName() + "'" + ", address='" + getAddress() + "'"
-                + ", birth='" + getBirth() + "'" + ", sex='" + getSex() + "'" + "}";
     }
 }

@@ -16,6 +16,15 @@ import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 public class Semester {
 
@@ -41,51 +50,4 @@ public class Semester {
     @Column
     @CreationTimestamp
     private Date createdAt;
-
-    public Semester() {
-    }
-
-    public Semester(SemesterNo semNo, Date startDate, Date endDate) {
-        this.semNo = semNo;
-        this.startDate = startDate;
-        this.endDate = endDate;
-    }
-
-    public SemesterNo getName() {
-        return this.semNo;
-    }
-
-    public void setName(SemesterNo semNo) {
-        this.semNo = semNo;
-    }
-
-    public Date getStartDate() {
-        return this.startDate;
-    }
-
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
-    }
-
-    public Date getEndDate() {
-        return this.endDate;
-    }
-
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
-    }
-
-    public Date getCreatedAt() {
-        return this.createdAt;
-    }
-
-    public String getSemesterID() {
-        return this.semesterID;
-    }
-
-    @Override
-    public String toString() {
-        return "{" + " semesterID='" + getSemesterID() + "'" + ", semNo='" + getName() + "'" + ", startDate='"
-                + getStartDate() + "'" + ", endDate='" + getEndDate() + "'" + "}";
-    }
 }

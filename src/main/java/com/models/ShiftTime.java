@@ -10,7 +10,15 @@ import javax.persistence.Id;
 import org.hibernate.annotations.GenericGenerator;
 
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 public class ShiftTime {
 
@@ -26,38 +34,4 @@ public class ShiftTime {
     @Column
     @NotNull(message = "End shift time cannot empty")
     private Date endTime;
-
-    public ShiftTime() {
-    }
-
-    public ShiftTime(Date startTime, Date endTime) {
-        this.startTime = startTime;
-        this.endTime = endTime;
-    }
-
-    public String getId() {
-        return this.id;
-    }
-
-    public Date getStartTime() {
-        return this.startTime;
-    }
-
-    public void setStartTime(Date startTime) {
-        this.startTime = startTime;
-    }
-
-    public Date getEndTime() {
-        return this.endTime;
-    }
-
-    public void setEndTime(Date endTime) {
-        this.endTime = endTime;
-    }
-
-    @Override
-    public String toString() {
-        return "{" + " id='" + getId() + "'" + ", startTime='" + getStartTime() + "'" + ", endTime='" + getEndTime()
-                + "'" + "}";
-    }
 }

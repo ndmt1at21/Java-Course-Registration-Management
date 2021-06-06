@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.constants.Sex;
+import com.dao.ConfiguarationReponsitory;
 import com.dev.LoadDevDataToDB;
 import com.models.Class;
 import com.models.CourseRegistration;
@@ -18,13 +19,19 @@ public class App {
         App app = new App();
         app.test();
 
-        CourseRegistrationServices ser = new CourseRegistrationServices();
-        CourseServices ser2 = new CourseServices();
-        List<CourseRegistration> cReg = ser.findByCourseID(ser2.getCourses(1, 1).get(0).getCourseID());
+        // CourseRegistrationServices ser = new CourseRegistrationServices();
+        // CourseServices ser2 = new CourseServices();
+        // List<CourseRegistration> cReg = ser.findByCourseID(ser2.getCourses(1,
+        // 1).get(0).getCourseID());
 
-        cReg.forEach(c -> {
-            System.out.println(c.getStudent().getUserId());
-        });
+        // cReg.forEach(c -> {
+        // System.out.println(c.getStudent().getUserId());
+        // });
+
+        ConfiguarationReponsitory res = new ConfiguarationReponsitory();
+        res.addConfiguaration("test", Integer.valueOf(2));
+
+        System.out.println(res.getConfiguration("test").toString());
     }
 
     public void test() {

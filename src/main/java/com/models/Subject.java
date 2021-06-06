@@ -11,6 +11,15 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 public class Subject {
 
@@ -32,47 +41,4 @@ public class Subject {
     @Column
     @Positive(message = "Number of credit cannot be negative")
     private int credits;
-
-    public Subject() {
-    }
-
-    public Subject(String subjectID, String subjectName, int credits) {
-        this.subjectID = subjectID;
-        this.subjectName = subjectName;
-        this.credits = credits;
-    }
-
-    public String getSubjectID() {
-        return this.subjectID;
-    }
-
-    public void setSubjectCode(String subjectCode) {
-        this.subjectCode = subjectCode;
-    }
-
-    public String getSubjectCode() {
-        return this.subjectCode;
-    }
-
-    public String getSubjectName() {
-        return this.subjectName;
-    }
-
-    public void setSubjectName(String subjectName) {
-        this.subjectName = subjectName;
-    }
-
-    public int getCredits() {
-        return this.credits;
-    }
-
-    public void setCredits(int credits) {
-        this.credits = credits;
-    }
-
-    @Override
-    public String toString() {
-        return "{" + ", subjectCode='" + getSubjectCode() + "'" + ", subjectName='" + getSubjectName() + "'"
-                + ", credits='" + getCredits() + "'" + "}";
-    }
 }

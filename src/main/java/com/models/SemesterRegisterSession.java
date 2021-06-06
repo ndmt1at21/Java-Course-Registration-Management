@@ -12,6 +12,15 @@ import org.hibernate.annotations.GenericGenerator;
 
 import jakarta.validation.constraints.NotNull;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 public class SemesterRegisterSession {
 
@@ -30,48 +39,4 @@ public class SemesterRegisterSession {
     @Column
     @NotNull
     private Date endTime;
-
-    public SemesterRegisterSession() {
-    }
-
-    public SemesterRegisterSession(Semester semester, Date startTime, Date endTime) {
-        this.semester = semester;
-        this.startTime = startTime;
-        this.endTime = endTime;
-    }
-
-    public String getSemesterRegisterSessionID() {
-        return this.semesterRegisterSessionID;
-    }
-
-    public Date getEndTime() {
-        return this.endTime;
-    }
-
-    public void setEndTime(Date endTime) {
-        this.endTime = endTime;
-    }
-
-    public Semester getSemester() {
-        return this.semester;
-    }
-
-    public void setSemester(Semester semester) {
-        this.semester = semester;
-    }
-
-    public Date getStartTime() {
-        return this.startTime;
-    }
-
-    public void setStartTime(Date startTime) {
-        this.startTime = startTime;
-    }
-
-    @Override
-    public String toString() {
-        return "{" + " semesterRegisterSessionID='" + getSemesterRegisterSessionID() + "'" + ", semester='"
-                + getSemester() + "'" + ", startTime='" + getStartTime() + "'" + ", endTime='" + getEndTime() + "'"
-                + "}";
-    }
 }

@@ -26,6 +26,7 @@
         <mapping class="com.models.SemesterRegisterSession" />
         <mapping class="com.models.ShiftTime" />
         <mapping class="com.models.CourseRegistration" />
+        <mapping class="com.models.Configuration" />
 
     </session-factory>
 </hibernate-configuration>

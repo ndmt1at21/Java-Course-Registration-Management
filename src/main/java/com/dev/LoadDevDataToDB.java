@@ -167,13 +167,13 @@ public class LoadDevDataToDB {
             String semNo = reader.readLine();
             switch (semNo) {
                 case "1":
-                    semester.setName(SemesterNo.SEM1);
+                    semester.setSemNo(SemesterNo.SEM1);
                     break;
                 case "2":
-                    semester.setName(SemesterNo.SEM2);
+                    semester.setSemNo(SemesterNo.SEM2);
                     break;
                 default:
-                    semester.setName(SemesterNo.SEM3);
+                    semester.setSemNo(SemesterNo.SEM3);
             }
 
             semester.setStartDate(formatter.parse(reader.readLine()));
@@ -286,7 +286,8 @@ public class LoadDevDataToDB {
         for (int i = 1; i < 20; i++) {
             Student randStu = randEleInList(allStudents);
             Course randCour = randEleInList(allCourses);
-            services.createCourseRegistration(new CourseRegistration(randStu, randCour));
+            services.createCourseRegistration(
+                    CourseRegistration.builder().course(randCour).student(randStu).build());
         }
     }
 }

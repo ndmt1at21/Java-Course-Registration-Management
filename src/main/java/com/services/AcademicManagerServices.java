@@ -9,8 +9,7 @@ public class AcademicManagerServices {
 
     AcademicManagerReponsitory repo = new AcademicManagerReponsitory();
 
-    public AcademicManagerServices() {
-    }
+    public AcademicManagerServices() {}
 
     public void createAcademicManager(AcademicManager obj) {
         repo.createAcademicManager(obj);

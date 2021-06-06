@@ -21,7 +21,8 @@ public class CourseRegistrationServices {
     }
 
     public void createCourseRegistration(Student student, Course course) {
-        repo.createCourseRegistration(new CourseRegistration(student, course));
+        CourseRegistration cReg = CourseRegistration.builder().course(course).student(student).build();
+        repo.createCourseRegistration(cReg);
     }
 
     public void updateCourseRegistration(CourseRegistration courseRegistration) {

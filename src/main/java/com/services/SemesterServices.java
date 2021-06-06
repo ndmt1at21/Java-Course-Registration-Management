@@ -9,8 +9,7 @@ public class SemesterServices {
 
     SemesterReponsitory repo = new SemesterReponsitory();
 
-    public SemesterServices() {
-    }
+    public SemesterServices() {}
 
     public void createSemester(Semester semester) {
         repo.createSemester(semester);

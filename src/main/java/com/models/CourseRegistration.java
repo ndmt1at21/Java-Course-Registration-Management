@@ -4,16 +4,7 @@ import java.time.DayOfWeek;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
+import javax.persistence.*;
 
 import com.services.CourseRegistrationServices;
 
@@ -21,7 +12,12 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 
 import jakarta.validation.ValidationException;
+import lombok.*;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = { "studentID", "courseID" }))
 public class CourseRegistration {
@@ -46,52 +42,16 @@ public class CourseRegistration {
     @PrePersist
     @PreUpdate
     private void validatorCourseRegistration() throws ValidationException {
-        checkDuplicateTimetable();
-        checkLimitCourse();
+        validateDuplicateTimetable();
+        validateLimitCourse();
     }
 
-    public CourseRegistration() {
-    }
-
-    public CourseRegistration(Student student, Course course) {
-        this.student = student;
-        this.course = course;
-    }
-
-    public String getCourseRegistrationID() {
-        return this.courseRegistrationID;
-    }
-
-    public Student getStudent() {
-        return this.student;
-    }
-
-    public void setStudent(Student student) {
-        this.student = student;
-    }
-
-    public Course getCourse() {
-        return this.course;
-    }
-
-    public void setCourse(Course course) {
-        this.course = course;
-    }
-
-    public Date getRegisteredAt() {
-        return this.registeredAt;
-    }
-
-    public void setRegisteredAt(Date registeredAt) {
-        this.registeredAt = registeredAt;
-    }
-
-    private void checkDuplicateTimetable() throws ValidationException {
+    private void validateDuplicateTimetable() throws ValidationException {
         if (student == null || course == null)
             return;
 
         CourseRegistrationServices services = new CourseRegistrationServices();
-        List<CourseRegistration> cRegs = services.findByStudentID(student.getUserId());
+        List<CourseRegistration> cRegs = services.findByStudentID(student.getUserID());
 
         Date startShift = course.getShiftTime().getStartTime();
         DayOfWeek dayOfWeek = course.getDayOfWeek();
@@ -106,12 +66,12 @@ public class CourseRegistration {
         });
     }
 
-    private void checkLimitCourse() throws ValidationException {
+    private void validateLimitCourse() throws ValidationException {
         if (student == null || course == null)
             return;
 
         CourseRegistrationServices services = new CourseRegistrationServices();
-        List<CourseRegistration> cRegs = services.findByStudentID(student.getUserId());
+        List<CourseRegistration> cRegs = services.findByStudentID(student.getUserID());
 
         if (cRegs.size() == 8) {
             throw new ValidationException("The maximum number of course that you ca register is 8");
