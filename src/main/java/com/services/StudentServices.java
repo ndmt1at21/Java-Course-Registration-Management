@@ -3,6 +3,8 @@ package com.services;
 import java.util.List;
 
 import com.dao.StudentReponsitory;
+import com.models.Course;
+import com.models.CourseRegistration;
 import com.models.Student;
 
 public class StudentServices {
@@ -25,5 +27,9 @@ public class StudentServices {
 
     public void createStudent(Student student) {
         repo.createStudent(student);
+    }
+
+    public void registerCourse(Student student, Course course) {
+
     }
 }

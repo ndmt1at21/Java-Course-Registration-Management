@@ -18,11 +18,11 @@ public class Subject {
     @Column
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid")
-    private String id;
+    private String subjectID;
 
     @Column(unique = true)
     @NotNull(message = "Subject id cannot empty")
-    private String subjectID;
+    private String subjectCode;
 
     @Column
     @NotNull(message = "Subject's name cannot empty")
@@ -42,16 +42,16 @@ public class Subject {
         this.credits = credits;
     }
 
-    public String getId() {
-        return this.id;
-    }
-
     public String getSubjectID() {
         return this.subjectID;
     }
 
-    public void setSubjectID(String subjectID) {
-        this.subjectID = subjectID;
+    public void setSubjectCode(String subjectCode) {
+        this.subjectCode = subjectCode;
+    }
+
+    public String getSubjectCode() {
+        return this.subjectCode;
     }
 
     public String getSubjectName() {
@@ -72,7 +72,7 @@ public class Subject {
 
     @Override
     public String toString() {
-        return "{" + " id='" + getId() + "'" + ", subjectID='" + getSubjectID() + "'" + ", subjectName='"
-                + getSubjectName() + "'" + ", credits='" + getCredits() + "'" + "}";
+        return "{" + ", subjectCode='" + getSubjectCode() + "'" + ", subjectName='" + getSubjectName() + "'"
+                + ", credits='" + getCredits() + "'" + "}";
     }
 }

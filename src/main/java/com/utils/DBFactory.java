@@ -27,7 +27,6 @@ public class DBFactory {
 
             String queryStr = "from " + modelClass.getSimpleName();
 
-            System.out.println(queryStr);
             Query<T> query = session.createQuery(queryStr, modelClass);
             query.setFirstResult(firstIndexRow);
             query.setMaxResults(limit);
@@ -82,10 +81,31 @@ public class DBFactory {
         });
     }
 
-    public static <T, U extends Serializable> T get(Class<T> modelClass, U id) {
+    public static <T, U extends Serializable> T findByID(Class<T> modelClass, U id) {
         return runTransaction((Session session) -> {
             T obj = session.get(modelClass, id);
             return obj;
+        });
+    }
+
+    public static <T, U> List<T> find(Class<T> modelClass, String property, U value) {
+        return runTransaction((Session session) -> {
+            String className = modelClass.getSimpleName();
+            String queryStr = "select s from " + className + " s where " + "s." + property + " = :value";
+            Query<T> query = session.createQuery(queryStr, modelClass);
+            query.setParameter("value", value.toString());
+
+            return query.list();
+        });
+    }
+
+    public static <T> List<T> groupBy(Class<T> modelClass, String property) {
+        return runTransaction((Session session) -> {
+            String className = modelClass.getSimpleName();
+            String sql = "from " + className + " group by " + className + "." + property;
+            Query<T> query = session.createQuery(sql, modelClass);
+
+            return query.list();
         });
     }
 

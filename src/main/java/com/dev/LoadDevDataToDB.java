@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
-import java.util.Date;
 import java.util.List;
 
 import com.constants.SemesterNo;
@@ -16,12 +15,14 @@ import com.constants.Sex;
 import com.models.AcademicManager;
 import com.models.Class;
 import com.models.Course;
+import com.models.CourseRegistration;
 import com.models.Semester;
 import com.models.ShiftTime;
 import com.models.Student;
 import com.models.Subject;
 import com.services.AcademicManagerServices;
 import com.services.ClassServices;
+import com.services.CourseRegistrationServices;
 import com.services.CourseServices;
 import com.services.SemesterServices;
 import com.services.ShiftTimeServices;
@@ -40,6 +41,7 @@ public class LoadDevDataToDB {
             loadSemester();
             loadCourseData();
             setCurrentSemester();
+            setCourseRegistration();
         } catch (Exception e) {
             System.out.println(e.getLocalizedMessage());
         }
@@ -196,7 +198,7 @@ public class LoadDevDataToDB {
         Subject subject = new Subject();
 
         while (true) {
-            subject.setSubjectID(reader.readLine());
+            subject.setSubjectCode(reader.readLine());
             subject.setSubjectName(reader.readLine());
             subject.setCredits(Integer.parseInt(reader.readLine()));
 
@@ -273,5 +275,18 @@ public class LoadDevDataToDB {
     static private <T> T randEleInList(List<T> list) {
         int rand = (int) (Math.random() * list.size());
         return list.get(rand);
+    }
+
+    static private void setCourseRegistration() {
+        CourseRegistrationServices services = new CourseRegistrationServices();
+
+        List<Course> allCourses = (new CourseServices()).getCourses(1, 10);
+        List<Student> allStudents = (new StudentServices()).getStudents(1, 10);
+
+        for (int i = 1; i < 20; i++) {
+            Student randStu = randEleInList(allStudents);
+            Course randCour = randEleInList(allCourses);
+            services.createCourseRegistration(new CourseRegistration(randStu, randCour));
+        }
     }
 }

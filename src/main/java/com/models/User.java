@@ -32,7 +32,7 @@ public class User {
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid")
     @Column(updatable = false)
-    private String id;
+    private String userID;
 
     @Column
     @NotNull
@@ -104,8 +104,8 @@ public class User {
         this.sex = sex;
     }
 
-    public String getId() {
-        return this.id;
+    public String getUserId() {
+        return this.userID;
     }
 
     public String getUsername() {
@@ -171,8 +171,8 @@ public class User {
 
     @Override
     public String toString() {
-        return "{" + " id='" + getId() + "'" + ", username='" + getUsername() + "'" + ", firstName='" + getFirstName()
-                + "'" + ", lastName='" + getLastName() + "'" + ", address='" + getAddress() + "'" + ", birth='"
-                + getBirth() + "'" + ", sex='" + getSex() + "'" + "}";
+        return "{" + " id='" + getUserId() + "'" + ", username='" + getUsername() + "'" + ", firstName='"
+                + getFirstName() + "'" + ", lastName='" + getLastName() + "'" + ", address='" + getAddress() + "'"
+                + ", birth='" + getBirth() + "'" + ", sex='" + getSex() + "'" + "}";
     }
 }

@@ -20,7 +20,7 @@ public class SemesterRegisterSession {
     @GenericGenerator(name = "uuid", strategy = "uuid")
     private String semesterRegisterSessionID;
 
-    @OneToOne()
+    @OneToOne
     private Semester semester;
 
     @Column
