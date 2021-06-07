@@ -19,23 +19,24 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = { "studentID", "courseID" }))
+@Table(name = "course_registration", uniqueConstraints = @UniqueConstraint(columnNames = { "student_id", "course_id" }))
 public class CourseRegistration {
 
     @Id
+    @Column(name = "id", updatable = false)
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid")
     private String courseRegistrationID;
 
     @ManyToOne
-    @JoinColumn(name = "studentID")
+    @JoinColumn(name = "student_id")
     private Student student;
 
     @ManyToOne
-    @JoinColumn(name = "courseID")
+    @JoinColumn(name = "course_id")
     private Course course;
 
-    @Column(nullable = false)
+    @Column(name = "registered_at", nullable = false)
     @CreationTimestamp
     private Date registeredAt;
 

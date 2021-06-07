@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -21,24 +22,25 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 @Entity
+@Table(name = "subject")
 public class Subject {
 
     @Id
-    @Column
+    @Column(name = "id", updatable = false)
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid")
     private String subjectID;
 
-    @Column(unique = true)
+    @Column(name = "subject_code", unique = true)
     @NotNull(message = "Subject id cannot empty")
     private String subjectCode;
 
-    @Column
+    @Column(name = "subject_name")
     @NotNull(message = "Subject's name cannot empty")
     @Size(max = 100, message = "Subject name is too long")
     private String subjectName;
 
-    @Column
+    @Column(name = "number_of_credits")
     @Positive(message = "Number of credit cannot be negative")
     private int credits;
 }

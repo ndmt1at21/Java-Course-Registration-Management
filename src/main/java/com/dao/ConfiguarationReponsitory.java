@@ -6,6 +6,15 @@ import com.models.Configuration;
 import com.utils.DBFactory;
 
 public class ConfiguarationReponsitory {
+    public <T> void saveConfiguaration(String configName, T configVar) {
+        Configuration config = DBFactory.findByID(Configuration.class, configName);
+
+        if (config == null) {
+            addConfiguaration(configName, configVar, null);
+            return;
+        }
+    }
+
     public <T> void addConfiguaration(String configName, T configVar) {
         if (!configVar.getClass().getName().startsWith("java.lang"))
             return;
@@ -14,8 +23,8 @@ public class ConfiguarationReponsitory {
     }
 
     public <T> void addConfiguaration(String configName, T configVar, String notes) {
-        Configuration config = new Configuration(configName, configVar.getClass().getName(),
-                configVar.toString(), notes);
+        Configuration config = new Configuration(configName, configVar.getClass().getName(), configVar.toString(),
+                notes);
         DBFactory.create(config);
     }
 
@@ -35,7 +44,6 @@ public class ConfiguarationReponsitory {
 
             return value != null ? value : null;
         } catch (Exception e) {
-            System.out.println(e.getMessage());
             return null;
         }
     }

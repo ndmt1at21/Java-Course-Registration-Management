@@ -12,8 +12,11 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.MapKeyJoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.PostLoad;
+import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.constants.Sex;
@@ -30,17 +33,20 @@ import lombok.Data;
 @AllArgsConstructor
 @Builder
 @Entity
+@Table(name = "class")
 public class Class {
     @Id
+    @Column(name = "id", updatable = false)
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid")
     private String classID;
 
-    @Column(unique = true)
+    @Column(name = "class_name", unique = true)
     @NotNull(message = "Class name cannot null")
     private String className;
 
     @OneToMany(mappedBy = "studentClass", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @MapKeyJoinColumn(name = "student_id")
     private List<Student> students;
 
     @Transient

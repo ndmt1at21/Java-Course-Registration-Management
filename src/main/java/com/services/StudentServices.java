@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.dao.StudentReponsitory;
 import com.models.Course;
-import com.models.CourseRegistration;
 import com.models.Student;
 
 public class StudentServices {

@@ -286,8 +286,7 @@ public class LoadDevDataToDB {
         for (int i = 1; i < 20; i++) {
             Student randStu = randEleInList(allStudents);
             Course randCour = randEleInList(allCourses);
-            services.createCourseRegistration(
-                    CourseRegistration.builder().course(randCour).student(randStu).build());
+            services.createCourseRegistration(CourseRegistration.builder().course(randCour).student(randStu).build());
         }
     }
 }

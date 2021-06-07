@@ -17,8 +17,9 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @SuperBuilder
 @Entity
+@Table(name = "academic_mamanger")
 public class AcademicManager extends User {
-    @Column(unique = true, updatable = false)
+    @Column(name = "academic_id", updatable = false)
     @NotNull(message = "Academic Manager Id cannnot empty")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String academicManagerID;

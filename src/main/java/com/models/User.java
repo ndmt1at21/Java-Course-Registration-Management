@@ -14,6 +14,7 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
+import com.constants.RoleType;
 import com.constants.Sex;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -24,7 +25,6 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
@@ -34,51 +34,55 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @SuperBuilder
 @Entity
-@Table(name = "`User`")
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Table(name = "`user`")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class User {
 
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid")
-    @Column(updatable = false)
+    @Column(name = "id", updatable = false)
     private String userID;
 
-    @Column
+    @Column(name = "username", nullable = false)
     @NotNull
     @Size(min = 5, max = 20, message = "Username must between 5 and 20 characters")
     private String username;
 
-    @Column
+    @Column(name = "password", nullable = false)
     @NotNull
     @Size(min = 8, message = "Password too short")
     private String password;
 
-    @Column
+    @Column(name = "first_name")
     @NotNull
     @Size(max = 30, message = "First name is too long")
     private String firstName;
 
-    @Column
+    @Column(name = "last_name", nullable = false)
     @NotNull
     @Size(max = 100, message = "Last name is too long")
     private String lastName;
 
-    @Column
+    @Column(name = "address", nullable = false)
     @NotNull
     @Size(max = 500, message = "Address is too long")
     private String address;
 
-    @Column
+    @Column(name = "birth", nullable = false)
     @NotNull
     private Date birth;
 
-    @Column
+    @Column(name = "sex", nullable = false)
     @NotNull
     @Enumerated(EnumType.STRING)
     private Sex sex;
 
-    @Column(updatable = false)
+    @Column(name = "role_type", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private RoleType roleType;
+
+    @Column(name = "created_at", updatable = false)
     @CreationTimestamp
     private Date createdAt;
 

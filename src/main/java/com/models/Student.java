@@ -9,11 +9,14 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.MapKeyColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
+import javax.persistence.Table;
 
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -21,6 +24,8 @@ import jakarta.validation.constraints.NotNull;
 
 import com.constants.Sex;
 import com.services.StudentServices;
+
+import org.hibernate.annotations.ColumnTransformer;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -34,15 +39,16 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @SuperBuilder
 @Entity
+@Table(name = "student")
 public class Student extends User {
 
-    @Column(unique = true, updatable = false)
+    @Column(name = "student_id", unique = true, updatable = false)
     @NotNull
     private String studentID;
 
-    @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "classID")
+    @JoinColumn(name = "class_id")
+    @NotNull
     private Class studentClass;
 
     @Column
@@ -52,10 +58,11 @@ public class Student extends User {
     private int startYear;
 
     @OneToMany(mappedBy = "student")
+    @MapKeyColumn(name = "course_registration_id")
     private List<CourseRegistration> registrations;
 
     @PrePersist
-    private void generateStudentID() {
+    private void generateStudentIDAndUsername() {
         String year = String.valueOf(this.getStartYear());
         String prefix = year.substring(year.length() - 2);
 
@@ -63,5 +70,6 @@ public class Student extends User {
         Long countStudent = studentServices.countStudentByYear(this.getStartYear());
 
         this.studentID = prefix + String.format("%04d", countStudent);
+        this.setUsername(this.studentID);
     }
 }

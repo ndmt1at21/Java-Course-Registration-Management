@@ -1,9 +1,6 @@
 package com.models;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.MapsId;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -16,25 +13,16 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 @Entity
+@Table(name = "current_semester")
 public class CurrentSemester {
 
     @Id
+    @Column(name = "id", updatable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String currentSemesterID;
 
     @OneToOne
+    @JoinColumn(name = "semester_id")
     @NotNull(message = "Semester cannot be null")
-    @MapsId
     private Semester semester;
-
-    public String getCurrentSemesterID() {
-        return this.currentSemesterID;
-    }
-
-    public Semester getSemester() {
-        return this.semester;
-    }
-
-    public void setSemester(Semester semester) {
-        this.semester = semester;
-    }
 }

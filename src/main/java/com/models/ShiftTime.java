@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -20,18 +21,20 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 @Entity
+@Table(name = "shift_time")
 public class ShiftTime {
 
     @Id
+    @Column(name = "id", updatable = false)
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid")
     private String id;
 
-    @Column
+    @Column(name = "start_time")
     @NotNull(message = "Start shift time cannot empty")
     private Date startTime;
 
-    @Column
+    @Column(name = "end_time")
     @NotNull(message = "End shift time cannot empty")
     private Date endTime;
 }

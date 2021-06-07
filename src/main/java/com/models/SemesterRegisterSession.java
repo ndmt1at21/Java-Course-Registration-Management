@@ -6,7 +6,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -22,21 +24,24 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 @Entity
+@Table(name = "semester_register_session")
 public class SemesterRegisterSession {
 
     @Id
+    @Column(name = "id", updatable = false)
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid")
     private String semesterRegisterSessionID;
 
     @OneToOne
+    @JoinColumn(name = "semester_id")
     private Semester semester;
 
-    @Column
+    @Column(name = "start_time")
     @NotNull
     private Date startTime;
 
-    @Column
+    @Column(name = "end_time")
     @NotNull
     private Date endTime;
 }

@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 import com.constants.SemesterNo;
 
@@ -26,28 +27,30 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 @Entity
+@Table(name = "semester")
 public class Semester {
 
     @Id
+    @Column(name = "id", updatable = false)
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid")
     private String semesterID;
 
-    @Column
+    @Column(name = "semester_no")
     @NotNull(message = "Name of semester is not specified")
     @Min(value = 1, message = "Name of semester is at least 1")
     @Max(value = 3, message = "Name of semester is less than 4")
     private SemesterNo semNo;
 
-    @Column
+    @Column(name = "start_date")
     @NotNull(message = "Start date of semester is not specified")
     private Date startDate;
 
-    @Column
+    @Column(name = "end_date")
     @NotNull(message = "End date of semester is not specified")
     private Date endDate;
 
-    @Column
+    @Column(name = "created_at")
     @CreationTimestamp
     private Date createdAt;
 }
