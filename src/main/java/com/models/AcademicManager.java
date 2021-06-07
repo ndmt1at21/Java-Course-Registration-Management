@@ -5,10 +5,12 @@ import java.util.UUID;
 import javax.persistence.*;
 
 import jakarta.validation.constraints.NotNull;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 @Data
@@ -20,8 +22,7 @@ import lombok.experimental.SuperBuilder;
 @Table(name = "academic_mamanger")
 public class AcademicManager extends User {
     @Column(name = "academic_id", updatable = false)
-    @NotNull(message = "Academic Manager Id cannnot empty")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Setter(value = AccessLevel.NONE)
     private String academicManagerID;
 
     @PrePersist

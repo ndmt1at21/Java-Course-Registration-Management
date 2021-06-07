@@ -6,18 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.MapKeyJoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.PostLoad;
-import javax.persistence.Table;
-import javax.persistence.Transient;
+import javax.persistence.*;
 
 import com.constants.Sex;
 
@@ -25,9 +14,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
 @Data
 @AllArgsConstructor
@@ -38,7 +25,8 @@ public class Class {
     @Id
     @Column(name = "id", updatable = false)
     @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "uuid2")
+    @Setter(value = AccessLevel.NONE)
     private String classID;
 
     @Column(name = "class_name", unique = true)
@@ -55,8 +43,9 @@ public class Class {
     @Transient
     private Map<Sex, Integer> numberOfStudentBySex;
 
-    @Column
+    @Column(name = "created_at")
     @CreationTimestamp
+    @Setter(value = AccessLevel.NONE)
     private Date createdAt;
 
     @PostLoad

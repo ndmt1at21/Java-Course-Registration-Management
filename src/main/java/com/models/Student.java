@@ -1,36 +1,16 @@
 package com.models;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.MapKeyColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.PrePersist;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 
-import com.constants.Sex;
 import com.services.StudentServices;
 
-import org.hibernate.annotations.ColumnTransformer;
-
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 @Data
@@ -43,7 +23,7 @@ import lombok.experimental.SuperBuilder;
 public class Student extends User {
 
     @Column(name = "student_id", unique = true, updatable = false)
-    @NotNull
+    @Setter(value = AccessLevel.NONE)
     private String studentID;
 
     @ManyToOne(fetch = FetchType.LAZY)

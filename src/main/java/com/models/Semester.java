@@ -2,11 +2,7 @@ package com.models;
 
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import com.constants.SemesterNo;
 
@@ -17,10 +13,7 @@ import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Data
 @NoArgsConstructor
@@ -33,7 +26,8 @@ public class Semester {
     @Id
     @Column(name = "id", updatable = false)
     @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "uuid2")
+    @Setter(value = AccessLevel.NONE)
     private String semesterID;
 
     @Column(name = "semester_no")
@@ -52,5 +46,6 @@ public class Semester {
 
     @Column(name = "created_at")
     @CreationTimestamp
+    @Setter(value = AccessLevel.NONE)
     private Date createdAt;
 }

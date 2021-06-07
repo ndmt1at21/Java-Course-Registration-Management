@@ -1,28 +1,17 @@
 package com.models;
 
 import java.time.DayOfWeek;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Data
 @NoArgsConstructor
@@ -34,7 +23,8 @@ public class Course {
     @Id
     @Column(name = "id", updatable = false)
     @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "uuid2")
+    @Setter(value = AccessLevel.NONE)
     private String courseID;
 
     @Column(name = "teacher_name")
@@ -68,5 +58,6 @@ public class Course {
 
     @Column(name = "created_at")
     @CreationTimestamp
+    @Setter(value = AccessLevel.NONE)
     private Date createdAt;
 }

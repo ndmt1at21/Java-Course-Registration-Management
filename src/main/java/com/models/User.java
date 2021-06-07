@@ -2,17 +2,7 @@ package com.models;
 
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import com.constants.RoleType;
 import com.constants.Sex;
@@ -24,9 +14,7 @@ import at.favre.lib.crypto.bcrypt.BCrypt;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 @Data
@@ -37,10 +25,9 @@ import lombok.experimental.SuperBuilder;
 @Table(name = "`user`")
 @Inheritance(strategy = InheritanceType.JOINED)
 public class User {
-
     @Id
     @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "uuid2")
     @Column(name = "id", updatable = false)
     private String userID;
 
@@ -80,10 +67,12 @@ public class User {
 
     @Column(name = "role_type", nullable = false)
     @Enumerated(EnumType.STRING)
-    private RoleType roleType;
+    @Builder.Default
+    private RoleType roleType = RoleType.STUDENT;
 
     @Column(name = "created_at", updatable = false)
     @CreationTimestamp
+    @Setter(value = AccessLevel.NONE)
     private Date createdAt;
 
     @PrePersist

@@ -25,7 +25,8 @@ public class CourseRegistration {
     @Id
     @Column(name = "id", updatable = false)
     @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "uuid2")
+    @Setter(value = AccessLevel.NONE)
     private String courseRegistrationID;
 
     @ManyToOne
@@ -38,6 +39,7 @@ public class CourseRegistration {
 
     @Column(name = "registered_at", nullable = false)
     @CreationTimestamp
+    @Setter(value = AccessLevel.NONE)
     private Date registeredAt;
 
     @PrePersist

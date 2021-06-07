@@ -24,6 +24,8 @@ public class App {
         App app = new App();
         app.test();
 
+        Student stu = new Student();
+
         // CourseRegistrationServices ser = new CourseRegistrationServices();
         // CourseServices ser2 = new CourseServices();
         // List<CourseRegistration> cReg = ser.findByCourseID(ser2.getCourses(1,
