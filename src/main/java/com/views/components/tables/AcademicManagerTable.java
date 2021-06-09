@@ -39,8 +39,8 @@ public class AcademicManagerTable extends Table {
             System.out.println("dfhdjhh");
         });
 
-        model.addRow(new Object[] { false, "2", "3", "4", "5", new Date(), new JButton("dfjhdjh") });
-        model.addRow(new Object[] { false, "2", "3", "4", "6", new Date(), new JButton("dfjhdjh") });
+        model.addRow(new Object[] { false, "5", "5", "54", "5", new Date(), new JButton("dfjhdjh") });
+        model.addRow(new Object[] { false, "2", "2", "abc?", "test?", new Date(), new JButton("dfjhdjh") });
         model.addRow(new Object[] { false, "2", "3", "4", "6", new Date(), new JButton("dfjhdjh") });
         model.addRow(new Object[] { false, "2", "3", "4", "6", new Date(), new JButton("dfjhdjh") });
     }
