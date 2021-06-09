@@ -1,15 +1,30 @@
 package com.crs;
 
+import java.awt.Color;
+import java.awt.EventQueue;
+import java.io.File;
+import java.io.FileInputStream;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-
+import java.util.Set;
+import java.util.Map.Entry;
 import javax.swing.UIManager;
+import javax.swing.plaf.FontUIResource;
 
 import com.constants.ConfigUI;
 import com.constants.Sex;
 import com.dao.ConfiguarationReponsitory;
 import com.dev.LoadDevDataToDB;
+import com.formdev.flatlaf.FlatDarculaLaf;
+import com.formdev.flatlaf.FlatDarkLaf;
+import com.formdev.flatlaf.FlatIntelliJLaf;
+import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.FlatLightLaf;
+import com.formdev.flatlaf.IntelliJTheme;
 import com.models.Class;
 import com.models.CourseRegistration;
 import com.models.Student;
@@ -42,20 +57,29 @@ public class App {
     }
 
     public void test() {
-        LoadDevDataToDB.loadAllDataDev();
-        // initTheme();
-        // setUIFont(ConfigUI.DefaultFont.body);
-        // Login login = new Login();
-        // login.setVisible(true);
+        // LoadDevDataToDB.loadAllDataDev();
+        initTheme();
+
+        EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                Login login = new Login();
+                login.setVisible(true);
+            }
+        });
     }
 
     public void initTheme() {
         try {
-            UIManager.setLookAndFeel(new FlatLightLaf());
+            File file = new File("./src/main/resources/LightFlatTheme.theme.json");
+            UIManager.setLookAndFeel(IntelliJTheme.createLaf(new FileInputStream(file)));
+            UIManager.put("Button.arc", ConfigUI.BUTTON_ARC);
+            UIManager.put("TextComponent.arc", ConfigUI.TEXTFIELD_ARC);
         } catch (Exception ex) {
             System.err.println("Failed to initialize LaF");
         }
 
+        setUIFont(new FontUIResource(ConfigUI.DefaultFont.BODY));
     }
 
     public void setUIFont(javax.swing.plaf.FontUIResource f) {

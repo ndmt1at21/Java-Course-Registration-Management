@@ -7,11 +7,18 @@ import com.constants.ConfigUI;
 
 public class Login extends JFrame {
     JButton btn;
+    Navigate nav;
 
     public Login() {
-        btn = new JButton("Button");
-        btn.setFont(ConfigUI.DefaultFont.h1);
-        add(btn);
+        super();
+        initComponent();
+    }
 
+    private void initComponent() {
+        setSize(400, 300);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        Navigate nav = new Navigate();
+        add(nav);
     }
 }
