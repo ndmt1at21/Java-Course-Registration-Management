@@ -16,7 +16,6 @@ import com.utils.UIFactory;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -24,13 +23,13 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.HierarchyEvent;
-import java.awt.event.HierarchyListener;
-
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
@@ -47,6 +46,7 @@ public class TableCRUD extends JPanel {
     public TableCRUD() {
         super();
         initComponents();
+        initSearchComponent();
     }
 
     public TableCRUD(Table table) {
@@ -61,8 +61,8 @@ public class TableCRUD extends JPanel {
         searchTextField = UIFactory.createTextField();
         searchLabel = new JLabel("Search: ");
         deleteBtn = UIFactory.createBtn("Delete", Color.RED);
-        editBtn = UIFactory.createBtn("Create", Color.GREEN);
-        createBtn = UIFactory.createBtn("Edit", Color.YELLOW);
+        editBtn = UIFactory.createBtn("Edit", Color.YELLOW);
+        createBtn = UIFactory.createBtn("Create", Color.GREEN);
         refreshBtn = UIFactory.createBtn("Refresh", Color.WHITE);
 
         // Layout container
@@ -86,22 +86,32 @@ public class TableCRUD extends JPanel {
         topPanel.add(pRight);
 
         // Add all to Panel CRUD
+        addTable();
+        add(topPanel, BorderLayout.NORTH);
+
+        setBorder(new EmptyBorder(ConfigUI.Padding.NORMAL, ConfigUI.Padding.NORMAL,
+                ConfigUI.Padding.NORMAL, ConfigUI.Padding.NORMAL));
+    }
+
+    private void addTable() {
+        if (table == null)
+            return;
+
         JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.setBorder(BorderFactory.createEmptyBorder());
         scrollPane.setFocusable(false);
 
         scrollPane.setOpaque(false);
         scrollPane.getViewport().setOpaque(false);
-
-        add(topPanel, BorderLayout.NORTH);
         add(scrollPane, BorderLayout.CENTER);
-        setBorder(new EmptyBorder(ConfigUI.Padding.NORMAL, ConfigUI.Padding.NORMAL, ConfigUI.Padding.NORMAL,
-                ConfigUI.Padding.NORMAL));
     }
 
     // Ref:
     // https://stackoverflow.com/questions/22066387/how-to-search-an-element-in-a-jtable-java
     private void initSearchComponent() {
+        if (table == null)
+            return;
+
         rowSorter = new TableRowSorter<TableModel>(table.getModel());
         table.setRowSorter(rowSorter);
 
@@ -143,6 +153,8 @@ public class TableCRUD extends JPanel {
 
     public void setTable(Table table) {
         this.table = table;
+        addTable();
+        initSearchComponent();
     }
 
     private void layoutTop(JPanel topPanel) {
@@ -151,7 +163,8 @@ public class TableCRUD extends JPanel {
         topPanel.setLayout(topLayout);
 
         //// trick remove first, last vgap of layout
-        topPanel.setBorder(new EmptyBorder(0, -topLayout.getVgap() - 2, 0, -topLayout.getVgap() - 2));
+        topPanel.setBorder(
+                new EmptyBorder(0, -topLayout.getVgap() - 2, 0, -topLayout.getVgap() - 2));
     }
 
     private void layoutTopLeft(JPanel panel) {
@@ -195,16 +208,28 @@ public class TableCRUD extends JPanel {
         panel.add(refreshBtn, gbc);
     }
 
-    public void addHandleButtonDeleteClick(FunctionCallbackButtonClicked fn) {
+    public void addHandlerButtonDeleteClick(FunctionCallbackButtonClicked fn) {
         deleteBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                List<Integer> rowsSelected = getRowsSelected();
+                String message = "You will delete " + rowsSelected.size()
+                        + " items. Are you absolutely sure?";
+                int option = JOptionPane.showConfirmDialog(getParent(), message, "Confirm Delete",
+                        JOptionPane.YES_NO_OPTION);
+
+                if (option == JOptionPane.YES_OPTION) {
+                    for (int i = 0; i < rowsSelected.size(); i++) {
+                        getTable().getModel().removeRow(rowsSelected.get(i) - i);
+                    }
+                }
+
                 fn.run();
             }
         });
     }
 
-    public void handleButtonCreateClick(FunctionCallbackButtonClicked fn) {
+    public void addHandlerButtonCreateClick(FunctionCallbackButtonClicked fn) {
         createBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -213,21 +238,41 @@ public class TableCRUD extends JPanel {
         });
     }
 
-    public void handleButtonEditClick(FunctionCallbackButtonClicked fn) {
+    public void addHandlerButtonEditClick(FunctionCallbackButtonClicked fn) {
         editBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                if (getRowsSelected().size() > 1) {
+                    String message = "You only can edit one item";
+                    JOptionPane.showMessageDialog(getParent(), message, "Error Action",
+                            JOptionPane.CLOSED_OPTION);
+                    return;
+                }
+
                 fn.run();
             }
         });
     }
 
-    public void handleButtonRefreshClick(FunctionCallbackButtonClicked fn) {
+    public void addHandlerButtonRefreshClick(FunctionCallbackButtonClicked fn) {
         refreshBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                table.getModel().fireTableDataChanged();
                 fn.run();
             }
         });
+    }
+
+    private List<Integer> getRowsSelected() {
+        List<Integer> list = new ArrayList<>();
+
+        for (int i = 0; i < table.getModel().getRowCount(); i++) {
+            if ((Boolean) table.getValueAt(i, 0) == true) {
+                list.add(i);
+            }
+        }
+
+        return list;
     }
 }

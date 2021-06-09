@@ -10,6 +10,7 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -20,10 +21,10 @@ import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 
 import com.constants.ConfigUI;
-import com.constants.FunctionCallbackSelectRow;
 
 public class Table extends JTable {
-    private static final Insets columnGap = new Insets(0, ConfigUI.Padding.NORMAL, 0, ConfigUI.Padding.NORMAL);
+    private static final Insets columnGap =
+            new Insets(0, ConfigUI.Padding.NORMAL, 0, ConfigUI.Padding.NORMAL);
 
     public Table() {
         super();
@@ -42,16 +43,8 @@ public class Table extends JTable {
 
         setShowGrid(false);
         setAutoCreateRowSorter(true);
-        setRowSelectionAllowed(false);
-    }
 
-    public void addRowSelectionListener(FunctionCallbackSelectRow callback) {
-        getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
-                callback.run(getSelectedRows());
-            }
-        });
+        setRowSelectionAllowed(true);
     }
 
     @Override
@@ -101,9 +94,10 @@ public class Table extends JTable {
 
     private class TableHeaderRenderer extends DefaultTableCellRenderer {
         @Override
-        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
-                int row, int column) {
-            JLabel c = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+        public Component getTableCellRendererComponent(JTable table, Object value,
+                boolean isSelected, boolean hasFocus, int row, int column) {
+            JLabel c = (JLabel) super.getTableCellRendererComponent(table, value, isSelected,
+                    hasFocus, row, column);
 
             c.setFont(ConfigUI.DefaultFont.H3);
             c.setBorder(new EmptyBorder(columnGap));

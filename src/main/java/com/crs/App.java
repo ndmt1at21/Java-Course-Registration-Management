@@ -57,7 +57,7 @@ public class App {
     }
 
     public void test() {
-        // LoadDevDataToDB.loadAllDataDev();
+        LoadDevDataToDB.loadAllDataDev();
         initTheme();
 
         EventQueue.invokeLater(new Runnable() {

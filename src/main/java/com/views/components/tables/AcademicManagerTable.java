@@ -1,23 +1,35 @@
 package com.views.components.tables;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
+import com.constants.FunctionCallbackButtonClicked;
+import com.models.AcademicManager;
+import com.services.AcademicManagerServices;
 
-import com.views.components.tables.Table;
-
-public class AcademicManagerTable extends Table {
+public class AcademicManagerTable extends TableCRUD {
+    private AcademicManagerServices services;
+    private DefaultTableModel model;
+    private final String[] columnNames =
+            {"ID", "EmployeeID", "Username", "Last Name", "First Name", "Birth", "Gender"};
 
     public AcademicManagerTable() {
-        super();
+        services = new AcademicManagerServices();
+
         initComponents();
+        loadData();
+        handleEventComponent();
     }
 
     private void initComponents() {
+        services = new AcademicManagerServices();
+
         // Init model
-        Object[] columnNames = { true, "EmployeeID", "Username", "First Name", "Last Name", "Birth", "Gender" };
-        DefaultTableModel model = new DefaultTableModel() {
+        model = new DefaultTableModel() {
             @Override
             public Class<?> getColumnClass(int column) {
                 if (column == 0)
@@ -31,17 +43,40 @@ public class AcademicManagerTable extends Table {
                 return String.class;
             }
         };
-
         model.setColumnIdentifiers(columnNames);
-        setModel(model);
 
-        addRowSelectionListener((int[] a) -> {
-            System.out.println("dfhdjhh");
+        // Init table
+        Table table = new Table();
+        table.setModel(model);
+
+
+        setTable(table);
+        table.setRowSelectionAllowed(true);
+        table.getSelectionModel().setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+    }
+
+    private void loadData() {
+        List<AcademicManager> academicManagers = services.getAcademicManagers(1, 10);
+        academicManagers.forEach(am -> {
+            model.addRow(new Object[] {false, am.getAcademicManagerID(), am.getUsername(),
+                    am.getLastName(), am.getFirstName(), am.getBirth(), am.getSex()});
         });
+    }
 
-        model.addRow(new Object[] { false, "5", "5", "54", "5", new Date(), new JButton("dfjhdjh") });
-        model.addRow(new Object[] { false, "2", "2", "abc?", "test?", new Date(), new JButton("dfjhdjh") });
-        model.addRow(new Object[] { false, "2", "3", "4", "6", new Date(), new JButton("dfjhdjh") });
-        model.addRow(new Object[] { false, "2", "3", "4", "6", new Date(), new JButton("dfjhdjh") });
+    private void handleEventComponent() {
+        addHandlerButtonDeleteClick(handlerDeleteButtonClick());
+        addHandlerButtonEditClick(handlerEditButtonClick());
+    }
+
+    private FunctionCallbackButtonClicked handlerDeleteButtonClick() {
+        return () -> {
+
+        };
+    }
+
+    private FunctionCallbackButtonClicked handlerEditButtonClick() {
+        return () -> {
+
+        };
     }
 }

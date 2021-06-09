@@ -38,8 +38,8 @@ import com.views.components.tables.AcademicManagerTable;
 import com.views.components.tables.TableCRUD;
 
 public class Navigate extends JPanel {
-    private final List<String> items = Arrays.asList("Student", "Academic Manager", "Subject", "Course",
-            "Semester Register Session", "Semester");
+    private final List<String> items = Arrays.asList("Student", "Academic Manager", "Subject",
+            "Course", "Semester Register Session", "Semester");
 
     public Navigate() {
         this.initComponent();
@@ -96,7 +96,6 @@ public class Navigate extends JPanel {
         // });
 
         AcademicManagerTable table = new AcademicManagerTable();
-        TableCRUD tab = new TableCRUD(table);
-        add(tab);
+        add(table);
     }
 }
