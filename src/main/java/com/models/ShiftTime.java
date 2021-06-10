@@ -1,5 +1,7 @@
 package com.models;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.persistence.*;
@@ -16,7 +18,6 @@ import lombok.*;
 @Entity
 @Table(name = "shift_time")
 public class ShiftTime {
-
     @Id
     @Column(name = "id", updatable = false)
     @GeneratedValue(generator = "uuid")
@@ -31,4 +32,13 @@ public class ShiftTime {
     @Column(name = "end_time")
     @NotNull(message = "End shift time cannot empty")
     private Date endTime;
+
+    @Override
+    public String toString() {
+        DateFormat formatter = new SimpleDateFormat("hh:mm");
+        String shiftTimeStart = formatter.format(getStartTime());
+        String shiftTimeEnd = formatter.format(getEndTime());
+
+        return shiftTimeStart + " - " + shiftTimeEnd;
+    }
 }

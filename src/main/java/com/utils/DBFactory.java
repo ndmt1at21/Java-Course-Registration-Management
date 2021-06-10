@@ -71,6 +71,15 @@ public class DBFactory {
         });
     }
 
+    public static <T> List<T> getAll(Class<T> modelClass) {
+        String queryStr = "from " + modelClass.getName();
+
+        return runTransaction((Session session) -> {
+            Query<T> query = session.createQuery(queryStr, modelClass);
+            return query.list();
+        });
+    }
+
     public static <T> Long countAll(Class<T> modelClass) {
         String queryStr = "select count(*) from " + modelClass.getName();
 

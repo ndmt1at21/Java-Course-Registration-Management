@@ -34,7 +34,15 @@ import javax.swing.table.*;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 import com.constants.ConfigUI;
+import com.models.Semester;
+import com.models.Student;
 import com.views.components.tables.AcademicManagerTable;
+import com.views.components.tables.ClassTable;
+import com.views.components.tables.CourseRegistrationTable;
+import com.views.components.tables.CourseTable;
+import com.views.components.tables.SemesterRegisterSessionTable;
+import com.views.components.tables.SemesterTable;
+import com.views.components.tables.StudentTable;
 import com.views.components.tables.TableCRUD;
 
 public class Navigate extends JPanel {
@@ -95,7 +103,19 @@ public class Navigate extends JPanel {
         // }
         // });
 
-        AcademicManagerTable table = new AcademicManagerTable();
+        // AcademicManagerTable table = new AcademicManagerTable();
+        // add(table);
+
+        // ClassTable table = new ClassTable();
+        // add(table);
+
+        // CourseTable table = new CourseTable();
+        // add(table);
+
+        // SemesterRegisterSessionTable table = new SemesterRegisterSessionTable();
+        // add(table);
+
+        CourseRegistrationTable table = new CourseRegistrationTable();
         add(table);
     }
 }

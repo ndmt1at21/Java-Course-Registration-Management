@@ -42,6 +42,7 @@ public class LoadDevDataToDB {
             loadCourseData();
             setCurrentSemester();
             setCourseRegistration();
+            setSemesterRegisterSession();
         } catch (Exception e) {
             System.out.println(e.getLocalizedMessage());
         }
@@ -221,9 +222,11 @@ public class LoadDevDataToDB {
         Course course = new Course();
 
         List<Subject> subjects = (new SubjectServices()).getSubjects(1, 10);
+        List<Class> classes = (new ClassServices()).getClass(1, 10);
         List<ShiftTime> shifts = (new ShiftTimeServices()).getShiftTImes(1, 10);
 
         int rand = (int) (Math.random() + 7);
+
         while (true) {
             course.setTeacherName(reader.readLine());
             course.setDepartmentName(reader.readLine());
@@ -231,6 +234,7 @@ public class LoadDevDataToDB {
             course.setSubject(randEleInList(subjects));
             course.setDayOfWeek(DayOfWeek.of(rand));
             course.setShiftTime(randEleInList(shifts));
+            course.setClassObj(classes.get(rand));
 
             String line = reader.readLine();
             if (line == null)
@@ -286,7 +290,12 @@ public class LoadDevDataToDB {
         for (int i = 1; i < 20; i++) {
             Student randStu = randEleInList(allStudents);
             Course randCour = randEleInList(allCourses);
-            services.createCourseRegistration(CourseRegistration.builder().course(randCour).student(randStu).build());
+            services.createCourseRegistration(
+                    CourseRegistration.builder().course(randCour).student(randStu).build());
         }
+    }
+
+    static private void setSemesterRegisterSession() {
+
     }
 }

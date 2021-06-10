@@ -1,23 +1,28 @@
 package com.views.components.tables;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.DayOfWeek;
 import java.util.Date;
 import java.util.List;
 
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 import com.constants.FunctionCallbackButtonClicked;
-import com.models.AcademicManager;
-import com.services.AcademicManagerServices;
+import com.models.Course;
+import com.models.CourseRegistration;
+import com.models.Student;
+import com.services.CourseRegistrationServices;
 
-public class AcademicManagerTable extends TableCRUD {
-    private AcademicManagerServices services;
+public class CourseRegistrationTable extends TableCRUD {
+    private CourseRegistrationServices services;
     private DefaultTableModel model;
-    private List<AcademicManager> academicManagers;
-    private final String[] columnNames = { "#", "EmployeeID", "Username", "Last Name", "First Name", "Birth",
-            "Gender" };
+    private List<CourseRegistration> courseRegistrations;
+    private final String[] columnNames = {"#", "Student Code", "Name", "Subject Code",
+            "Teacher Name", "Timetable", "Time Register"};
 
-    public AcademicManagerTable() {
-        services = new AcademicManagerServices();
+    public CourseRegistrationTable() {
+        services = new CourseRegistrationServices();
 
         initComponents();
         loadData();
@@ -25,7 +30,7 @@ public class AcademicManagerTable extends TableCRUD {
     }
 
     private void initComponents() {
-        services = new AcademicManagerServices();
+        services = new CourseRegistrationServices();
 
         // Init model
         model = new DefaultTableModel() {
@@ -34,7 +39,7 @@ public class AcademicManagerTable extends TableCRUD {
                 if (column == 0)
                     return Boolean.class;
 
-                if (column == 5)
+                if (column == 5 || column == 6)
                     return Date.class;
 
                 return String.class;
@@ -52,10 +57,17 @@ public class AcademicManagerTable extends TableCRUD {
     }
 
     private void loadData() {
-        academicManagers = services.getAcademicManagers(1, 10);
-        academicManagers.forEach(am -> {
-            model.addRow(new Object[] { false, am.getAcademicManagerID(), am.getUsername(), am.getLastName(),
-                    am.getFirstName(), am.getBirth(), am.getSex() });
+        courseRegistrations = services.getCourseRegistrations(1, 10);
+
+        courseRegistrations.forEach(crs -> {
+            Student student = crs.getStudent();
+            Course course = crs.getCourse();
+
+            String timetable = (new Date()).toString();
+            model.addRow(new Object[] {false, student.getStudentID(),
+                    student.getLastName() + " " + student.getFirstName(),
+                    course.getSubject().getSubjectCode(), course.getTeacherName(), timetable,
+                    crs.getRegisteredAt()});
         });
     }
 
@@ -68,9 +80,14 @@ public class AcademicManagerTable extends TableCRUD {
     private FunctionCallbackButtonClicked handlerDeleteButtonClick() {
         return (List<Integer> rowsSelected) -> {
             for (int i = 0; i < rowsSelected.size(); i++) {
-                AcademicManager selectedAm = academicManagers
-                        .get(getTable().convertRowIndexToModel(rowsSelected.get(i)));
-                services.deleteAcademicManager(selectedAm);
+                int idxInModel = getTable().convertRowIndexToModel(rowsSelected.get(i));
+
+                // Delete in db
+                CourseRegistration selectedAm = courseRegistrations.get(idxInModel);
+                services.deleteCourseRegistration(selectedAm);
+
+                // Delete in table
+                getTable().getModel().removeRow(idxInModel);
             }
         };
     }

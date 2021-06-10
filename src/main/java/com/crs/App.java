@@ -39,8 +39,6 @@ public class App {
         App app = new App();
         app.test();
 
-        Student stu = new Student();
-
         // CourseRegistrationServices ser = new CourseRegistrationServices();
         // CourseServices ser2 = new CourseServices();
         // List<CourseRegistration> cReg = ser.findByCourseID(ser2.getCourses(1,
@@ -66,6 +64,12 @@ public class App {
                 Login login = new Login();
                 login.setVisible(true);
             }
+        });
+
+        StudentServices s = new StudentServices();
+
+        s.getStudents(1, 10).forEach(stu -> {
+            System.out.println(stu.getAddress());
         });
     }
 

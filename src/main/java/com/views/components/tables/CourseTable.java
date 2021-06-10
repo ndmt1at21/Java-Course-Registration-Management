@@ -1,23 +1,25 @@
 package com.views.components.tables;
 
-import java.util.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.DayOfWeek;
 import java.util.List;
 
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 import com.constants.FunctionCallbackButtonClicked;
-import com.models.Student;
-import com.services.StudentServices;
+import com.models.Course;
+import com.services.CourseServices;
 
-public class StudentTable extends TableCRUD {
-    private StudentServices services;
+public class CourseTable extends TableCRUD {
+    private CourseServices services;
     private DefaultTableModel model;
-    private List<Student> students;
-    private final String[] columnNames = { "#", "StudentID", "Username", "First Name", "Last Name", "Birth", "Gender",
-            "Class", "Start Year" };
+    private List<Course> courses;
+    private final String[] columnNames = {"#", "Subject Code", "Subject Name", "Teacher Name",
+            "Department", "Day Of Week", "Shift Time", "Number of Slots"};
 
-    public StudentTable() {
-        services = new StudentServices();
+    public CourseTable() {
+        services = new CourseServices();
 
         initComponents();
         loadData();
@@ -25,7 +27,7 @@ public class StudentTable extends TableCRUD {
     }
 
     private void initComponents() {
-        services = new StudentServices();
+        services = new CourseServices();
 
         // Init model
         model = new DefaultTableModel() {
@@ -35,7 +37,10 @@ public class StudentTable extends TableCRUD {
                     return Boolean.class;
 
                 if (column == 5)
-                    return Date.class;
+                    return DayOfWeek.class;
+
+                if (column == 7)
+                    return int.class;
 
                 return String.class;
             }
@@ -47,14 +52,17 @@ public class StudentTable extends TableCRUD {
         table.setModel(model);
 
         setTable(table);
+        table.setRowSelectionAllowed(true);
+        table.getSelectionModel().setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
     }
 
     private void loadData() {
-        List<Student> students = services.getStudents(1, 10);
-        students.forEach(stu -> {
-            model.addRow(
-                    new Object[] { false, stu.getStudentID(), stu.getUsername(), stu.getLastName(), stu.getFirstName(),
-                            stu.getBirth(), stu.getSex(), stu.getStudentClass().getClassName(), stu.getStartYear() });
+        courses = services.getCourses(1, 10);
+        courses.forEach(course -> {
+            model.addRow(new Object[] {false, course.getSubject().getSubjectCode(),
+                    course.getSubject().getSubjectName(), course.getTeacherName(),
+                    course.getDepartmentName(), course.getDayOfWeek(),
+                    course.getShiftTime().toString(), course.getNumberOfSlot()});
         });
     }
 
@@ -67,8 +75,14 @@ public class StudentTable extends TableCRUD {
     private FunctionCallbackButtonClicked handlerDeleteButtonClick() {
         return (List<Integer> rowsSelected) -> {
             for (int i = 0; i < rowsSelected.size(); i++) {
-                Student selectedStu = students.get(getTable().convertRowIndexToModel(rowsSelected.get(i)));
-                services.deleteStudent(selectedStu);
+                int idxInModel = getTable().convertRowIndexToModel(rowsSelected.get(i));
+
+                // Delete in db
+                Course selectedAm = courses.get(idxInModel);
+                services.deleteCourse(selectedAm);
+
+                // Delete in table
+                getTable().getModel().removeRow(idxInModel);
             }
         };
     }

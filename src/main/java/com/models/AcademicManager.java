@@ -4,7 +4,6 @@ import java.util.UUID;
 
 import javax.persistence.*;
 
-import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;

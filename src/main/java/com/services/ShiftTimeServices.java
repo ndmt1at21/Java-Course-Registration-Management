@@ -9,8 +9,7 @@ public class ShiftTimeServices {
 
     ShiftTimeReponsitory repo = new ShiftTimeReponsitory();
 
-    public ShiftTimeServices() {
-    }
+    public ShiftTimeServices() {}
 
     public void createShiftTime(ShiftTime shiftTime) {
         repo.createShiftTime(shiftTime);

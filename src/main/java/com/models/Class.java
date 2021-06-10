@@ -17,6 +17,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 @Data
+@NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Entity
@@ -33,48 +34,36 @@ public class Class {
     @NotNull(message = "Class name cannot null")
     private String className;
 
-    @OneToMany(mappedBy = "studentClass", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "studentClass", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @MapKeyJoinColumn(name = "student_id")
-    private List<Student> students;
+    @Builder.Default
+    private List<Student> students = new ArrayList<Student>();
 
     @Transient
-    private int numberOfStudent;
+    @Builder.Default
+    private int numberOfStudent = 0;
 
     @Transient
-    private Map<Sex, Integer> numberOfStudentBySex;
+    @Builder.Default
+    private int numberOfFemale = 0;
+
+    @Transient
+    @Builder.Default
+    private int numberOfMale = 0;
+
+    @Column
+    @OneToMany(mappedBy = "courseID", fetch = FetchType.LAZY)
+    @Builder.Default
+    private List<Course> courses = new ArrayList<>();
+
 
     @Column(name = "created_at")
     @CreationTimestamp
     @Setter(value = AccessLevel.NONE)
     private Date createdAt;
 
-    @PostLoad
-    private void countNumberOfStudents() {
-        this.numberOfStudent = students.size();
-
-        students.forEach(student -> {
-            Integer currNum = this.numberOfStudentBySex.get(student.getSex());
-            this.numberOfStudentBySex.put(student.getSex(), currNum++);
-        });
-    }
-
-    public Class() {
-        this.students = new ArrayList<Student>();
-        this.numberOfStudent = 0;
-        this.numberOfStudentBySex = new HashMap<Sex, Integer>();
-
-        for (Sex sex : Sex.values())
-            this.numberOfStudentBySex.put(sex, 0);
-    }
-
     public Class(String className) {
         this.className = className;
-        this.students = new ArrayList<Student>();
-        this.numberOfStudent = 0;
-        this.numberOfStudentBySex = new HashMap<Sex, Integer>();
-
-        for (Sex sex : Sex.values())
-            this.numberOfStudentBySex.put(sex, 0);
     }
 
     public Class(String className, List<Student> students) {

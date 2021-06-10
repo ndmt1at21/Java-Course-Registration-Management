@@ -9,8 +9,7 @@ public class CourseServices {
 
     CourseReponsitory repo = new CourseReponsitory();
 
-    public CourseServices() {
-    }
+    public CourseServices() {}
 
     public void createCourse(Course course) {
         repo.createCourse(course);

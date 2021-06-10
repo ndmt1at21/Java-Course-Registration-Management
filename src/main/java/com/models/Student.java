@@ -1,5 +1,6 @@
 package com.models;
 
+import java.util.Currency;
 import java.util.List;
 
 import javax.persistence.*;
@@ -22,11 +23,16 @@ import lombok.experimental.SuperBuilder;
 @Table(name = "student")
 public class Student extends User {
 
+    @Override
+    public String toString() {
+        return "";
+    }
+
     @Column(name = "student_id", unique = true, updatable = false)
     @Setter(value = AccessLevel.NONE)
     private String studentID;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "class_id")
     @NotNull
     private Class studentClass;

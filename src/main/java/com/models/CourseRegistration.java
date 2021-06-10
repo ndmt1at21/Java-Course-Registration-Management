@@ -12,6 +12,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 
 import jakarta.validation.ValidationException;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 @Data
@@ -19,7 +20,8 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "course_registration", uniqueConstraints = @UniqueConstraint(columnNames = { "student_id", "course_id" }))
+@Table(name = "course_registration",
+        uniqueConstraints = @UniqueConstraint(columnNames = {"student_id", "course_id"}))
 public class CourseRegistration {
 
     @Id
@@ -36,6 +38,9 @@ public class CourseRegistration {
     @ManyToOne
     @JoinColumn(name = "course_id")
     private Course course;
+
+    @Column(name = "start_date", nullable = false)
+    private Date startDate;
 
     @Column(name = "registered_at", nullable = false)
     @CreationTimestamp

@@ -40,7 +40,7 @@ public class Course {
     @NotNull(message = "Day of week cannot empty")
     private DayOfWeek dayOfWeek;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "shift_time")
     @NotNull
     private ShiftTime shiftTime;
@@ -49,9 +49,12 @@ public class Course {
     @NotNull(message = "Number of slot cannot be null")
     private int numberOfSlot;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "subject")
     private Subject subject;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Class classObj;
 
     @OneToMany(mappedBy = "course")
     private List<CourseRegistration> registrations;

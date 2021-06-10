@@ -9,8 +9,7 @@ import com.models.Student;
 public class StudentServices {
     StudentReponsitory repo = new StudentReponsitory();
 
-    public StudentServices() {
-    }
+    public StudentServices() {}
 
     public List<Student> getStudents(int pageNumber, int limit) {
         return repo.getStudents(pageNumber, limit);
@@ -26,6 +25,10 @@ public class StudentServices {
 
     public void createStudent(Student student) {
         repo.createStudent(student);
+    }
+
+    public void deleteStudent(Student student) {
+        repo.updateStudent(student);
     }
 
     public void registerCourse(Student student, Course course) {

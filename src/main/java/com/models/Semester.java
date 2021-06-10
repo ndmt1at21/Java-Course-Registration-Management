@@ -1,5 +1,6 @@
 package com.models;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.persistence.*;
@@ -44,8 +45,24 @@ public class Semester {
     @NotNull(message = "End date of semester is not specified")
     private Date endDate;
 
+    @Transient
+    private String year;
+
     @Column(name = "created_at")
     @CreationTimestamp
     @Setter(value = AccessLevel.NONE)
     private Date createdAt;
+
+    @PostLoad
+    private void calcYear() {
+        Calendar cal = Calendar.getInstance();
+
+        cal.setTime(startDate);
+        int start = cal.get(Calendar.YEAR);
+
+        cal.setTime(endDate);
+        int end = cal.get(Calendar.YEAR);
+
+        year = String.valueOf(start) + " - " + String.valueOf(end);
+    }
 }

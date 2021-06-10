@@ -5,7 +5,7 @@ import java.util.Date;
 import javax.persistence.*;
 
 import org.hibernate.annotations.GenericGenerator;
-
+import jakarta.validation.ValidationException;
 import jakarta.validation.constraints.NotNull;
 
 import lombok.*;
@@ -25,7 +25,7 @@ public class SemesterRegisterSession {
     @Setter(value = AccessLevel.NONE)
     private String semesterRegisterSessionID;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "semester_id")
     private Semester semester;
 
@@ -36,4 +36,19 @@ public class SemesterRegisterSession {
     @Column(name = "end_time")
     @NotNull
     private Date endTime;
+
+    @PrePersist
+    @PreUpdate
+    private void validateSesstionTime() {
+
+        Date startSem = semester.getStartDate();
+        Date endSem = semester.getEndDate();
+
+        if (startTime.getTime() < startSem.getTime() && endTime.getTime() < endTime.getTime()) {
+            return;
+        }
+
+        throw new ValidationException("Time of session must between " + startSem.toString()
+                + " and " + endSem.toString());
+    }
 }

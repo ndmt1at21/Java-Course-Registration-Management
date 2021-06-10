@@ -23,8 +23,7 @@ public class ConfiguarationReponsitory {
     }
 
     public <T> void addConfiguaration(String configName, T configVar, String notes) {
-        Configuration config = new Configuration(configName, configVar.getClass().getName(), configVar.toString(),
-                notes);
+        Configuration config = new Configuration(configName, configVar, notes);
         DBFactory.create(config);
     }
 

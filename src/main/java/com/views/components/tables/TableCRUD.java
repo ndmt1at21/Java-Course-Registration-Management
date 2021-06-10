@@ -41,6 +41,7 @@ public class TableCRUD extends JPanel {
     private JButton editBtn;
     private JButton createBtn;
     private JButton refreshBtn;
+    private JButton detailBtn;
     private TableRowSorter<TableModel> rowSorter;
 
     public TableCRUD() {
@@ -63,6 +64,7 @@ public class TableCRUD extends JPanel {
         deleteBtn = UIFactory.createBtn("Delete", Color.RED);
         editBtn = UIFactory.createBtn("Edit", Color.YELLOW);
         createBtn = UIFactory.createBtn("Create", Color.GREEN);
+        detailBtn = UIFactory.createBtn("Detail", Color.GREEN);
         refreshBtn = UIFactory.createBtn("Refresh", Color.WHITE);
 
         // Layout container
@@ -173,6 +175,7 @@ public class TableCRUD extends JPanel {
         panel.add(createBtn);
         panel.add(editBtn);
         panel.add(deleteBtn);
+        panel.add(detailBtn);
     }
 
     private void layoutTopRight(JPanel panel) {
@@ -212,19 +215,23 @@ public class TableCRUD extends JPanel {
         deleteBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+                // Delete show in table
                 List<Integer> rowsSelected = getRowsSelected();
+
+                if (rowsSelected.size() == 0)
+                    return;
+
                 String message = "You will delete " + rowsSelected.size()
                         + " items. Are you absolutely sure?";
                 int option = JOptionPane.showConfirmDialog(getParent(), message, "Confirm Delete",
                         JOptionPane.YES_NO_OPTION);
 
                 if (option == JOptionPane.YES_OPTION) {
-                    for (int i = 0; i < rowsSelected.size(); i++) {
-                        getTable().getModel().removeRow(rowsSelected.get(i) - i);
-                    }
+                    fn.run(getRowsSelected());
+                    getTable().getModel().fireTableDataChanged();
                 }
 
-                fn.run();
             }
         });
     }
@@ -233,7 +240,8 @@ public class TableCRUD extends JPanel {
         createBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                fn.run();
+                fn.run(getRowsSelected());
+                getTable().getModel().fireTableDataChanged();
             }
         });
     }
@@ -242,14 +250,20 @@ public class TableCRUD extends JPanel {
         editBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (getRowsSelected().size() > 1) {
+                List<Integer> rowsSelected = getRowsSelected();
+
+                if (rowsSelected.size() == 0)
+                    return;
+
+                if (rowsSelected.size() > 0) {
                     String message = "You only can edit one item";
                     JOptionPane.showMessageDialog(getParent(), message, "Error Action",
                             JOptionPane.CLOSED_OPTION);
                     return;
                 }
 
-                fn.run();
+                fn.run(getRowsSelected());
+                getTable().getModel().fireTableDataChanged();
             }
         });
     }
@@ -258,8 +272,17 @@ public class TableCRUD extends JPanel {
         refreshBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                fn.run(getRowsSelected());
                 table.getModel().fireTableDataChanged();
-                fn.run();
+            }
+        });
+    }
+
+    public void addHandlerButtonDetailClick(FunctionCallbackButtonClicked fn) {
+        refreshBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                fn.run(getRowsSelected());
             }
         });
     }

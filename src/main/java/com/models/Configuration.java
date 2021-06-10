@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -29,6 +30,18 @@ public class Configuration {
 
     @Column(name = "notes")
     private String notes;
+
+    @Column(name = "status")
+    @Builder.Default
+    @NotNull
+    private boolean isActive = true;
+
+    public <T> Configuration(String settingName, T value, String notes) {
+        this.settingName = settingName;
+        this.dataType = value.getClass().getName();
+        this.value = value.toString();
+        this.notes = notes;
+    }
 
     public Configuration(String settingName, String dataType, String value) {
         this.settingName = settingName;

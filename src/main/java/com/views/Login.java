@@ -15,7 +15,7 @@ public class Login extends JFrame {
     }
 
     private void initComponent() {
-        setSize(400, 300);
+        setSize(1000, 500);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         Navigate nav = new Navigate();

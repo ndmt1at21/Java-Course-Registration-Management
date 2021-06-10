@@ -8,8 +8,7 @@ import com.models.Subject;
 public class SubjectServices {
     SubjectReponsitory repo = new SubjectReponsitory();
 
-    public SubjectServices() {
-    }
+    public SubjectServices() {}
 
     public void createSubject(Subject subject) {
         repo.createSubject(subject);

@@ -20,7 +20,7 @@ public class CourseRegistrationServices {
   }
 
   public void createCourseRegistration(Student student, Course course) {
-            CourseRegistration cReg = CourseRegistration.builder().course(course).student(student).build();
+    CourseRegistration cReg = CourseRegistration.builder().course(course).student(student).build();
     repo.createCourseRegistration(cReg);
   }
 
