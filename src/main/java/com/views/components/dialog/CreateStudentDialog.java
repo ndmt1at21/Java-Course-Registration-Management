@@ -1,4 +1,4 @@
-package com.views;
+package com.views.components.dialog;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -139,5 +139,9 @@ public class CreateStudentDialog extends JDialog {
         gbc.gridy++;
         gbc.insets = new Insets(30, 0, 0, 0);
         pContainer.add(UIFactory.generateForm(null, createBtn, 0, false), gbc);
+    }
+
+    private void loadData() {
+
     }
 }
