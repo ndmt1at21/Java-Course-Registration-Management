@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
+import java.util.Date;
 import java.util.List;
 
 import com.constants.SemesterNo;
@@ -16,7 +17,9 @@ import com.models.AcademicManager;
 import com.models.Class;
 import com.models.Course;
 import com.models.CourseRegistration;
+import com.models.CurrentSemester;
 import com.models.Semester;
+import com.models.SemesterRegisterSession;
 import com.models.ShiftTime;
 import com.models.Student;
 import com.models.Subject;
@@ -24,6 +27,7 @@ import com.services.AcademicManagerServices;
 import com.services.ClassServices;
 import com.services.CourseRegistrationServices;
 import com.services.CourseServices;
+import com.services.SemesterRegisterSessionServices;
 import com.services.SemesterServices;
 import com.services.ShiftTimeServices;
 import com.services.StudentServices;
@@ -41,8 +45,9 @@ public class LoadDevDataToDB {
             loadSemester();
             loadCourseData();
             setCurrentSemester();
-            setCourseRegistration();
             setSemesterRegisterSession();
+            setCourseRegistration();
+
         } catch (Exception e) {
             System.out.println(e.getLocalizedMessage());
         }
@@ -222,6 +227,7 @@ public class LoadDevDataToDB {
         Course course = new Course();
 
         List<Subject> subjects = (new SubjectServices()).getSubjects(1, 10);
+        List<Semester> semesters = (new SemesterServices()).getSemesters(1, 10);
         List<Class> classes = (new ClassServices()).getClass(1, 10);
         List<ShiftTime> shifts = (new ShiftTimeServices()).getShiftTImes(1, 10);
 
@@ -235,6 +241,7 @@ public class LoadDevDataToDB {
             course.setDayOfWeek(DayOfWeek.of(rand));
             course.setShiftTime(randEleInList(shifts));
             course.setClassObj(classes.get(rand));
+            course.setSemester(semesters.get(rand));
 
             String line = reader.readLine();
             if (line == null)
@@ -290,12 +297,26 @@ public class LoadDevDataToDB {
         for (int i = 1; i < 20; i++) {
             Student randStu = randEleInList(allStudents);
             Course randCour = randEleInList(allCourses);
-            services.createCourseRegistration(
-                    CourseRegistration.builder().course(randCour).student(randStu).build());
+            Date startDate = new Date(randCour.getSemester().getStartDate().getTime() + 2000);
+            services.createCourseRegistration(CourseRegistration.builder().course(randCour)
+                    .student(randStu).startDate(startDate).build());
         }
     }
 
     static private void setSemesterRegisterSession() {
+        SemesterRegisterSessionServices services = new SemesterRegisterSessionServices();
+        List<Semester> listSem = (new SemesterServices()).getSemesters(1, 10);
 
+        listSem.forEach(sem -> {
+            Date startDate = new Date(sem.getStartDate().getTime() + 100000L);
+            Date endDate = new Date(sem.getStartDate().getTime() + 10000000L);
+
+            System.out.println(startDate);
+            System.out.println(endDate);
+            SemesterRegisterSession ss = SemesterRegisterSession.builder().semester(sem)
+                    .startTime(startDate).endTime(endDate).build();
+
+            services.createSession(ss);
+        });
     }
 }

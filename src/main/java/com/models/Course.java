@@ -50,7 +50,7 @@ public class Course {
     private int numberOfSlot;
 
     @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "subject")
+    @JoinColumn(name = "subject_id")
     private Subject subject;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -58,6 +58,10 @@ public class Course {
 
     @OneToMany(mappedBy = "course")
     private List<CourseRegistration> registrations;
+
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "semester_id")
+    private Semester semester;
 
     @Column(name = "created_at")
     @CreationTimestamp

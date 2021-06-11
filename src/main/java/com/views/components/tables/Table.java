@@ -4,7 +4,8 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Insets;
-
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -38,6 +39,7 @@ public class Table extends JTable {
         tableHeader.setReorderingAllowed(false);
 
         // Init table
+        setDefaultRenderer(Date.class, new DateCellRenderer());
         setSelectionForeground(ConfigUI.SysColor.DARK);
         setGridColor(ConfigUI.SysColor.GRAY);
 
@@ -103,6 +105,20 @@ public class Table extends JTable {
             c.setBorder(new EmptyBorder(columnGap));
             c.setBackground(ConfigUI.SysColor.GRAY);
             c.setHorizontalAlignment(JLabel.LEADING);
+            return c;
+        }
+    }
+
+    private class DateCellRenderer extends DefaultTableCellRenderer {
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value,
+                boolean isSelected, boolean hasFocus, int row, int column) {
+            JLabel c = (JLabel) super.getTableCellRendererComponent(table, value, isSelected,
+                    hasFocus, row, column);
+
+            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+            c.setText(formatter.format((Date) value));
+
             return c;
         }
     }

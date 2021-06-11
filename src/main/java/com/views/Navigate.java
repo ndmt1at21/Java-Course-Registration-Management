@@ -1,121 +1,89 @@
 package com.views;
 
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
+import java.awt.BorderLayout;
 import java.awt.GridLayout;
-import java.awt.Insets;
-import java.awt.ScrollPane;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.ObjectInputFilter.Config;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JPanel;
-import javax.swing.JScrollBar;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.JTree;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
-import javax.swing.table.*;
-import javax.swing.tree.DefaultMutableTreeNode;
-
+import javax.swing.border.EmptyBorder;
 import com.constants.ConfigUI;
-import com.models.Semester;
-import com.models.Student;
-import com.views.components.tables.AcademicManagerTable;
-import com.views.components.tables.ClassTable;
-import com.views.components.tables.CourseRegistrationTable;
-import com.views.components.tables.CourseTable;
-import com.views.components.tables.SemesterRegisterSessionTable;
-import com.views.components.tables.SemesterTable;
-import com.views.components.tables.StudentTable;
-import com.views.components.tables.TableCRUD;
+import com.utils.UIFactory;
 
 public class Navigate extends JPanel {
     private final List<String> items = Arrays.asList("Student", "Academic Manager", "Subject",
             "Course", "Semester Register Session", "Semester");
 
+    JPanel pTop;
+    JPanel pCenter;
+    JPanel pBottom;
+    JButton accountBtn;
+    JButton logoutBtn;
+    private List<JButton> navItemBtns;
+
     public Navigate() {
+        super();
         this.initComponent();
     }
 
     private void initComponent() {
-        GridLayout layout = new GridLayout(1, 1);
-        setLayout(layout);
+        // Init nav
+        setLayout(new BorderLayout());
 
-        // items.forEach(item -> {
-        // Button btn = new Button(item);
-        // add(btn);
-        // });
+        // Create components
+        pTop = new JPanel();
+        pCenter = new JPanel();
+        pBottom = new JPanel();
+        accountBtn = UIFactory.createBtn("NGUYEN DUC MINH TRI", null);
+        logoutBtn = UIFactory.createBtn("", null);
 
-        // DefaultTableModel model = new DefaultTableModel() {
-        // @Override
-        // public Class<?> getColumnClass(int columnIndex) {
-        // if (columnIndex == 0)
-        // return Boolean.class;
-        // return String.class;
-        // }
-        // };
-        // model.addColumn("MaQG");
-        // model.addColumn("TenQG");
-        // model.addColumn("Button");
-        // model.addRow(new Object[] { true, "VN", "VN" });
+        navItemBtns = new ArrayList<>();
+        items.forEach(item -> {
+            JButton btn = new JButton(item);
+            btn.setOpaque(false);
+            btn.setBackground(ConfigUI.SysColor.DARK);
+            btn.setBorder(new EmptyBorder(0, 50, 0, 50));
+            btn.setHorizontalAlignment(JButton.LEFT);
+            btn.setForeground(ConfigUI.SysColor.WHITE);
+            btn.setFont(ConfigUI.DefaultFont.H3);
+            navItemBtns.add(btn);
+        });
 
-        // JTable table = new JTable(model) {
-        // public boolean isCellEditable(int row, int column) {
-        // return false;
-        // };
-        // };
+        // Setting components
+        pTop.setOpaque(false);
+        pCenter.setOpaque(false);
+        pBottom.setOpaque(false);
 
-        // add(new JScrollPane(table));
+        pTop.setLayout(new BoxLayout(pTop, BoxLayout.Y_AXIS));
+        pTop.setBorder(new EmptyBorder(10, 0, 10, 0));
+        pCenter.setLayout(new GridLayout(items.size(), 1));
+        pBottom.setLayout(new BoxLayout(pBottom, BoxLayout.Y_AXIS));
+        pBottom.setBorder(new EmptyBorder(10, 0, 10, 0));
 
-        // table.setSelectionBackground(Color.DARK_GRAY);
-        // table.setGridColor(Color.red);
-        // table.setShowGrid(true);
-        // table.setRowHeight(50);
-        // table.setFont(ConfigUI.DefaultFont.BODY);
-        // table.setForeground(ConfigUI.SysColor.PRIMARY);
-        // table.setSelectionBackground(selectionBackground);
-        // JTableHeader tableHeader = table.getTableHeader();
-        // tableHeader.setBackground(Color.GREEN);
-        // tableHeader.setPreferredSize(new Dimension(1000, 100));
-        // table.getSelectionModel().addListSelectionListener(new
-        // ListSelectionListener() {
-        // @Override
-        // public void valueChanged(ListSelectionEvent e) {
-        // System.out.println("dfdfhjhj");
-        // System.out.println(table.getValueAt(table.getSelectedRow(), 0).toString());
-        // System.out.println(table.getSelectedColumn());
-        // }
-        // });
+        accountBtn.setFont(ConfigUI.DefaultFont.H2);
+        accountBtn.setAlignmentX(JButton.CENTER_ALIGNMENT);
+        logoutBtn.setFont(ConfigUI.DefaultFont.H3);
+        logoutBtn.setAlignmentX(JButton.CENTER_ALIGNMENT);
+        logoutBtn.setBackground(ConfigUI.SysColor.DARK);
 
-        // AcademicManagerTable table = new AcademicManagerTable();
-        // add(table);
 
-        // ClassTable table = new ClassTable();
-        // add(table);
+        pTop.add(accountBtn);
+        pBottom.add(logoutBtn);
+        navItemBtns.forEach(btn -> {
+            pCenter.add(btn);
+        });
 
-        // CourseTable table = new CourseTable();
-        // add(table);
+        add(pTop, BorderLayout.NORTH);
+        add(pBottom, BorderLayout.SOUTH);
+        add(pCenter, BorderLayout.CENTER);
+    }
 
-        // SemesterRegisterSessionTable table = new SemesterRegisterSessionTable();
-        // add(table);
+    @Override
+    public void doLayout() {
+        super.doLayout();
 
-        CourseRegistrationTable table = new CourseRegistrationTable();
-        add(table);
+        pCenter.setBorder(new EmptyBorder(pCenter.getHeight() / 4, 0, pCenter.getHeight() / 4, 0));
     }
 }

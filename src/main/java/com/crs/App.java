@@ -1,38 +1,15 @@
 package com.crs;
 
-import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.GraphicsEnvironment;
 import java.io.File;
 import java.io.FileInputStream;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
-import java.util.Map.Entry;
 import javax.swing.UIManager;
 import javax.swing.plaf.FontUIResource;
-
 import com.constants.ConfigUI;
-import com.constants.Sex;
-import com.dao.ConfiguarationReponsitory;
-import com.dev.LoadDevDataToDB;
-import com.formdev.flatlaf.FlatDarculaLaf;
-import com.formdev.flatlaf.FlatDarkLaf;
-import com.formdev.flatlaf.FlatIntelliJLaf;
-import com.formdev.flatlaf.FlatLaf;
-import com.formdev.flatlaf.FlatLightLaf;
 import com.formdev.flatlaf.IntelliJTheme;
-import com.models.Class;
-import com.models.CourseRegistration;
-import com.models.Student;
-import com.services.ClassServices;
-import com.services.CourseRegistrationServices;
-import com.services.CourseServices;
-import com.services.StudentServices;
-import com.views.Login;
+import com.views.TestFrame;
 
 public class App {
     public static void main(String[] args) {
@@ -55,21 +32,15 @@ public class App {
     }
 
     public void test() {
-        LoadDevDataToDB.loadAllDataDev();
+        // LoadDevDataToDB.loadAllDataDev();
         initTheme();
 
         EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                Login login = new Login();
-                login.setVisible(true);
+                TestFrame tf = new TestFrame();
+                tf.setVisible(true);
             }
-        });
-
-        StudentServices s = new StudentServices();
-
-        s.getStudents(1, 10).forEach(stu -> {
-            System.out.println(stu.getAddress());
         });
     }
 
@@ -83,7 +54,19 @@ public class App {
             System.err.println("Failed to initialize LaF");
         }
 
+        loadFont();
         setUIFont(new FontUIResource(ConfigUI.DefaultFont.BODY));
+    }
+
+    public void loadFont() {
+        try {
+            Font f = Font.createFont(Font.TRUETYPE_FONT,
+                    new File("./src/main/resources/fonts/Roboto-Regular.ttf"));
+            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            ge.registerFont(f);
+        } catch (Exception e) {
+            System.out.println("djhdfhjjh");
+        }
     }
 
     public void setUIFont(javax.swing.plaf.FontUIResource f) {

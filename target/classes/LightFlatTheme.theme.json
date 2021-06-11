@@ -15,7 +15,7 @@
     },
 
     "Borders": {
-      "color": "#C4C4C4",
+      "color": null,
       "ContrastBorderColor": "#C4C4C4"
     },
 

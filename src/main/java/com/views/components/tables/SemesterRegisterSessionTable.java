@@ -16,7 +16,8 @@ public class SemesterRegisterSessionTable extends TableCRUD {
     private SemesterRegisterSessionServices services;
     private DefaultTableModel model;
     private List<SemesterRegisterSession> sessions;
-    private final String[] columnNames = {"#", "SemNo", "Year", "Start Date", "End Date"};
+    private final String[] columnNames =
+            {"#", "SemNo", "Year", "Session Start Date", "Session End Date"};
 
     public SemesterRegisterSessionTable() {
         services = new SemesterRegisterSessionServices();

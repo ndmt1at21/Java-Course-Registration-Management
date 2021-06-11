@@ -19,7 +19,7 @@ public class CourseRegistrationTable extends TableCRUD {
     private DefaultTableModel model;
     private List<CourseRegistration> courseRegistrations;
     private final String[] columnNames = {"#", "Student Code", "Name", "Subject Code",
-            "Teacher Name", "Timetable", "Time Register"};
+            "Teacher Name", "Timetable", "Week Start", "Time Register"};
 
     public CourseRegistrationTable() {
         services = new CourseRegistrationServices();
@@ -39,7 +39,7 @@ public class CourseRegistrationTable extends TableCRUD {
                 if (column == 0)
                     return Boolean.class;
 
-                if (column == 5 || column == 6)
+                if (column == 6 || column == 7)
                     return Date.class;
 
                 return String.class;
@@ -62,12 +62,13 @@ public class CourseRegistrationTable extends TableCRUD {
         courseRegistrations.forEach(crs -> {
             Student student = crs.getStudent();
             Course course = crs.getCourse();
+            String timetable = "(" + course.getShiftTime().toString() + ")."
+                    + course.getDayOfWeek().toString();
 
-            String timetable = (new Date()).toString();
             model.addRow(new Object[] {false, student.getStudentID(),
                     student.getLastName() + " " + student.getFirstName(),
                     course.getSubject().getSubjectCode(), course.getTeacherName(), timetable,
-                    crs.getRegisteredAt()});
+                    course.getSemester().getStartDate(), crs.getRegisteredAt()});
         });
     }
 

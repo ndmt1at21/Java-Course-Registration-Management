@@ -41,10 +41,14 @@ public class SemesterRegisterSession {
     @PreUpdate
     private void validateSesstionTime() {
 
+        if (endTime.getTime() - startTime.getTime() <= 0) {
+            throw new ValidationException("Session start time must be larger than end time");
+        }
+
         Date startSem = semester.getStartDate();
         Date endSem = semester.getEndDate();
 
-        if (startTime.getTime() < startSem.getTime() && endTime.getTime() < endTime.getTime()) {
+        if (startTime.getTime() > startSem.getTime() && endTime.getTime() < endSem.getTime()) {
             return;
         }
 
