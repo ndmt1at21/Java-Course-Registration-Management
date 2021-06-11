@@ -1,13 +1,13 @@
 package com.utils;
 
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.Graphics;
+import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
@@ -30,20 +30,20 @@ public class UIFactory {
     public static JTextField createTextField() {
         JTextField textField = new JTextField();
         textField.setBorder(
-                combineBorderPadding(textField.getBorder(), new Insets(ConfigUI.Padding.NORMAL,
-                        ConfigUI.Padding.TINY, ConfigUI.Padding.NORMAL, ConfigUI.Padding.TINY)));
+                combineBorderPadding(textField.getBorder(), new Insets(ConfigUI.Padding.TINY,
+                        ConfigUI.Padding.SMALL, ConfigUI.Padding.TINY, ConfigUI.Padding.SMALL)));
         return textField;
     }
 
     public static JPasswordField createPasswordTextField() {
         JPasswordField textField = new JPasswordField();
         textField.setBorder(
-                combineBorderPadding(textField.getBorder(), new Insets(ConfigUI.Padding.NORMAL,
-                        ConfigUI.Padding.TINY, ConfigUI.Padding.NORMAL, ConfigUI.Padding.TINY)));
+                combineBorderPadding(textField.getBorder(), new Insets(ConfigUI.Padding.TINY,
+                        ConfigUI.Padding.SMALL, ConfigUI.Padding.TINY, ConfigUI.Padding.SMALL)));
         return textField;
     }
 
-    private static Border combineBorderPadding(Border currBorder, Insets padding) {
+    public static Border combineBorderPadding(Border currBorder, Insets padding) {
         Border currOutsideBorder = currBorder;
         Border newInsideBorder = new EmptyBorder(padding);
 
@@ -55,10 +55,13 @@ public class UIFactory {
         return border;
     }
 
-    public static JPanel generateForm(JLabel label, JTextField textField, int padBetween) {
+    public static JPanel generateForm(JLabel label, JComponent component, int padBetween,
+            boolean isStretch) {
         JPanel p = new JPanel();
         p.setLayout(new GridBagLayout());
-        label.setFont(ConfigUI.DefaultFont.H3);
+
+        if (label != null)
+            label.setFont(ConfigUI.DefaultFont.H3);
 
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -66,39 +69,25 @@ public class UIFactory {
         gbc.weightx = 1;
         gbc.weighty = 0;
 
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.ipady = padBetween;
-        p.add(label, gbc);
+        if (label != null) {
+            gbc.gridx = 0;
+            gbc.gridy = 0;
+            gbc.ipady = padBetween;
+            p.add(label, gbc);
+        }
 
         gbc.gridy = 1;
         gbc.weighty = 1;
-        p.add(textField, gbc);
+
+        if (isStretch) {
+            p.add(component, gbc);
+        } else {
+            JPanel pComponent = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
+            pComponent.add(component);
+            p.add(pComponent, gbc);
+        }
 
         return p;
     }
 
-}
-
-
-class RoundedBorder implements Border {
-    private int radius;
-
-    RoundedBorder(int radius) {
-        this.radius = radius;
-    }
-
-    public boolean isBorderOpaque() {
-        return true;
-    }
-
-    @Override
-    public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
-        g.drawRoundRect(x, y, width - 1, height - 1, radius, radius);
-    }
-
-    @Override
-    public Insets getBorderInsets(Component c) {
-        return new Insets(this.radius + 1, this.radius + 1, this.radius + 2, this.radius);
-    }
 }

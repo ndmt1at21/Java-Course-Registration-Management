@@ -54,32 +54,24 @@ public class DatePicker extends JPanel {
 
     public void setHGap(int hGap) {
         this.hGap = hGap;
-    }
-
-    private void setYearOptions() {
-        yearOptions.removeAllItems();
-        getListYear().forEach(year -> {
-            yearOptions.addItem(year);
-        });
-    }
-
-    private void setDayOptions() {
-        dayOptions.removeAllItems();
-        getListDayOfMonth().forEach(day -> {
-            dayOptions.addItem(day);
-        });
-    }
-
-    private void setMonthOptions() {
-        monthOptions.removeAllItems();
-        getListMonthOfYear().forEach(month -> {
-            monthOptions.addItem(month);
-        });
+        ((GridLayout)this.getLayout()).setHgap(this.hGap);
     }
 
     public void setRangeYear(int min, int max) {
         this.minYear = min;
         this.maxYear = max;
+    }
+
+    public int getDay() {
+        return (int) dayOptions.getSelectedItem();
+    }
+
+    public int getMonth() {
+        return (int) monthOptions.getSelectedItem();
+    }
+
+    public int getYear() {
+        return (int) yearOptions.getSelectedItem();
     }
 
     private List<Integer> getListDayOfMonth() {
@@ -114,5 +106,26 @@ public class DatePicker extends JPanel {
         }
 
         return listYear;
+    }
+
+    private void setYearOptions() {
+        yearOptions.removeAllItems();
+        getListYear().forEach(year -> {
+            yearOptions.addItem(year);
+        });
+    }
+
+    private void setDayOptions() {
+        dayOptions.removeAllItems();
+        getListDayOfMonth().forEach(day -> {
+            dayOptions.addItem(day);
+        });
+    }
+
+    private void setMonthOptions() {
+        monthOptions.removeAllItems();
+        getListMonthOfYear().forEach(month -> {
+            monthOptions.addItem(month);
+        });
     }
 }

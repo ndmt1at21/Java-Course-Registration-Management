@@ -50,6 +50,7 @@ public class App {
             UIManager.setLookAndFeel(IntelliJTheme.createLaf(new FileInputStream(file)));
             UIManager.put("Button.arc", ConfigUI.BUTTON_ARC);
             UIManager.put("TextComponent.arc", ConfigUI.TEXTFIELD_ARC);
+            UIManager.put("Component.arc", ConfigUI.TEXTFIELD_ARC);
         } catch (Exception ex) {
             System.err.println("Failed to initialize LaF");
         }
