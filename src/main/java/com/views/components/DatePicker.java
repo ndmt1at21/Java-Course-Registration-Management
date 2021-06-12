@@ -54,7 +54,7 @@ public class DatePicker extends JPanel {
 
     public void setHGap(int hGap) {
         this.hGap = hGap;
-        ((GridLayout)this.getLayout()).setHgap(this.hGap);
+        ((GridLayout) this.getLayout()).setHgap(this.hGap);
     }
 
     public void setRangeYear(int min, int max) {
@@ -73,6 +73,14 @@ public class DatePicker extends JPanel {
     public int getYear() {
         return (int) yearOptions.getSelectedItem();
     }
+
+    public void setDate(Date date) {
+        Calendar cal = Calendar.getInstance();
+        yearOptions.setSelectedItem(cal.get(Calendar.YEAR));
+        monthOptions.setSelectedIndex(cal.get(Calendar.MONTH));
+        dayOptions.setSelectedIndex(cal.get(Calendar.DATE));
+    }
+
 
     private List<Integer> getListDayOfMonth() {
         YearMonth yearMonthObj = YearMonth.of((int) monthOptions.getSelectedItem(),

@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -12,18 +14,43 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import com.constants.ConfigUI;
+import com.models.Subject;
 import com.utils.UIFactory;
 import com.views.components.TComboBox;
 
-public class CreateSubjectDialog extends JDialog {
+/**
+ * Use for editting or creating subject
+ */
+public class ChangeSubjectDialog extends JDialog {
     private JTextField subjectCodeTextField;
     private JTextField subjectNameTextField;
     private TComboBox<Integer> creditPicker;
     private JButton createBtn;
 
-    public CreateSubjectDialog() {
+    private Subject subject;
+
+    private JLabel header;
+    private JLabel subjectCodeLabel;
+    private JLabel subjectNameLabel;
+    private JLabel creditLabel;
+
+    private JPanel pContainer;
+
+    public ChangeSubjectDialog() {
         super();
         initComponents();
+    }
+
+    /**
+     * If you want to edit current subject, use this contructor
+     * 
+     * @param subject subject will be editted
+     */
+    public void setSubject(Subject subject) {
+        this.subject = subject;
+        loadSubjectData();
+        layoutComponents();
+        repaint();
     }
 
     private void initComponents() {
@@ -33,16 +60,19 @@ public class CreateSubjectDialog extends JDialog {
         setLayout(new BorderLayout(0, 0));
 
         // Set up container
-        JPanel pContainer = new JPanel();
-        pContainer.setBorder(new EmptyBorder(50, 50, 50, 50));
+        pContainer = new JPanel();
+        pContainer.setBorder(new EmptyBorder(100, 100, 50, 100));
         pContainer.setLayout(new GridBagLayout());
-        add(new JScrollPane(pContainer), BorderLayout.CENTER);
+
+        JScrollPane scrollPane = new JScrollPane(pContainer);
+        scrollPane.getVerticalScrollBar().setUnitIncrement(ConfigUI.SCROLL_SPEED);
+        add(scrollPane, BorderLayout.CENTER);
 
         // Create components
-        JLabel header = new JLabel("Create Subject");
-        JLabel subjectCodeLabel = new JLabel("Subject Code");
-        JLabel subjectNameLabel = new JLabel("Subject Name");
-        JLabel creditLabel = new JLabel("Credits");
+        header = new JLabel("Create Subject");
+        subjectCodeLabel = new JLabel("Subject Code");
+        subjectNameLabel = new JLabel("Subject Name");
+        creditLabel = new JLabel("Credits");
 
         subjectCodeTextField = UIFactory.createTextField();
         subjectNameTextField = UIFactory.createTextField();
@@ -54,6 +84,24 @@ public class CreateSubjectDialog extends JDialog {
         header.setFont(ConfigUI.DefaultFont.H1);
         createBtn.setForeground(ConfigUI.SysColor.WHITE);
 
+        loadSubjectData();
+        layoutComponents();
+    }
+
+    /**
+     * Load subject data when subject not null <br>
+     * Just run when dialog is use for editing current subject<br>
+     * It must run after load all data relative (ex. picker data)
+     */
+    private void loadSubjectData() {
+        if (subject != null) {
+            subjectCodeTextField.setText(subject.getSubjectCode());
+            subjectNameLabel.setText(subject.getSubjectName());
+            creditPicker.setSelectedItem(subject.getCredits());
+        }
+    }
+
+    private void layoutComponents() {
         // Create constraints
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -85,5 +133,23 @@ public class CreateSubjectDialog extends JDialog {
         gbc.gridy++;
         gbc.insets = new Insets(30, 0, 0, 0);
         pContainer.add(UIFactory.generateForm(null, createBtn, 0, false), gbc);
+    }
+
+    private List<Integer> getListCredits() {
+        List<Integer> list = new ArrayList<>();
+        for (int i = 1; i <= 20; i++) {
+            list.add(i);
+        }
+
+        return list;
+    }
+
+    @Override
+    public void doLayout() {
+        super.doLayout();
+
+        if (getWidth() < 700) {
+            pContainer.setBorder(new EmptyBorder(50, 50, 20, 50));
+        }
     }
 }

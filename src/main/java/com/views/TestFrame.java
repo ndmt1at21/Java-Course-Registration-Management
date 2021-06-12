@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import com.views.components.dialog.CreateSubjectDialog;
+import com.views.components.dialog.ChangeCourseDialog;
 
 public class TestFrame extends JFrame {
     public TestFrame() {
@@ -17,7 +17,7 @@ public class TestFrame extends JFrame {
         btn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                CreateSubjectDialog dia = new CreateSubjectDialog();
+                ChangeCourseDialog dia = new ChangeCourseDialog();
                 dia.setVisible(true);
             }
         });

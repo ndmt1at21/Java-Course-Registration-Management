@@ -42,4 +42,6 @@ public class ConfigUI {
     static public class Table {
         public static final int ROW_HEIGHT = 50;
     }
+
+    static public final int SCROLL_SPEED = 5;
 }
